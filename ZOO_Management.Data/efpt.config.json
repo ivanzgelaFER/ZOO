@@ -1,0 +1,89 @@
+﻿{
+   "CodeGenerationMode": 3,
+   "ContextClassName": "ZOO_infsusContext",
+   "ContextNamespace": null,
+   "FilterSchemas": false,
+   "IncludeConnectionString": true,
+   "ModelNamespace": null,
+   "OutputContextPath": null,
+   "OutputPath": "Models",
+   "PreserveCasingWithRegex": true,
+   "ProjectRootNamespace": "ZOO_Management.Data",
+   "Schemas": null,
+   "SelectedHandlebarsLanguage": 2,
+   "SelectedToBeGenerated": 0,
+   "T4TemplatePath": null,
+   "Tables": [
+      {
+         "Name": "[dbo].[Dogadaj]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Inventar]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Korisnik]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Nastamba]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Posjetitelj]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Sektor]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Stvar]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[StvarInventar]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Ulaznica]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[VrstaZivotinje]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Zaposlenik]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Zivotinja]",
+         "ObjectType": 0
+      }
+   ],
+   "UiHint": null,
+   "UncountableWords": null,
+   "UseBoolPropertiesWithoutDefaultSql": false,
+   "UseDatabaseNames": false,
+   "UseDateOnlyTimeOnly": false,
+   "UseDbContextSplitting": false,
+   "UseDecimalDataAnnotationForSprocResult": true,
+   "UseFluentApiOnly": true,
+   "UseHandleBars": false,
+   "UseHierarchyId": false,
+   "UseInflector": false,
+   "UseLegacyPluralizer": false,
+   "UseManyToManyEntity": false,
+   "UseNoDefaultConstructor": false,
+   "UseNoNavigations": false,
+   "UseNoObjectFilter": false,
+   "UseNodaTime": false,
+   "UseNullableReferences": false,
+   "UsePrefixNavigationNaming": false,
+   "UseSchemaFolders": false,
+   "UseSchemaNamespaces": false,
+   "UseSpatial": false,
+   "UseT4": false
+}

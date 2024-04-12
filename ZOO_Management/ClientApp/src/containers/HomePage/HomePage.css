@@ -1,0 +1,5 @@
+.home-container {
+    width: calc(100% + 100px) !important;
+    margin: 0 -50px;
+    color: black !important;
+}

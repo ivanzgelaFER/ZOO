@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.8.34330.188
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZOO_Management", "ZOO_Management.csproj", "{1A6B680D-2FB9-4AC2-B8E1-66B7586AA421}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZOO_Management.Data", "..\ZOO_Management.Data\ZOO_Management.Data.csproj", "{BE20B87B-AAF7-40CA-99E6-DF0116549A8A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1A6B680D-2FB9-4AC2-B8E1-66B7586AA421}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1A6B680D-2FB9-4AC2-B8E1-66B7586AA421}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1A6B680D-2FB9-4AC2-B8E1-66B7586AA421}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1A6B680D-2FB9-4AC2-B8E1-66B7586AA421}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BE20B87B-AAF7-40CA-99E6-DF0116549A8A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BE20B87B-AAF7-40CA-99E6-DF0116549A8A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BE20B87B-AAF7-40CA-99E6-DF0116549A8A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BE20B87B-AAF7-40CA-99E6-DF0116549A8A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {7DFA505F-B807-4CEF-B9A7-B0738B841213}
+	EndGlobalSection
+EndGlobal
