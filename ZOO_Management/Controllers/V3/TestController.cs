@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using ZOO_Management.Data.Models;
+using ZOO_Management.Infrastructure.Models;
 
 namespace ZOO_Management.Controllers
 {

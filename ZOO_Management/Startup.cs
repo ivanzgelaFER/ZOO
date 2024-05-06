@@ -1,9 +1,8 @@
-﻿using Microsoft.AspNetCore.Http.Features;
-using Microsoft.AspNetCore.Mvc.Versioning.Conventions;
+﻿using Microsoft.AspNetCore.Mvc.Versioning.Conventions;
 using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
 using Microsoft.EntityFrameworkCore;
-using ZOO_Management.Data.Models;
 using ZOO_Management.Extensions;
+using ZOO_Management.Infrastructure.Models;
 
 namespace ZOO_Management
 {

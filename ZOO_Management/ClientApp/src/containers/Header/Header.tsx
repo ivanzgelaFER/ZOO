@@ -1,46 +1,39 @@
-import { Link, useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { logout } from "../../actions/authentificationActions";
-import { Button } from "primereact/button";
 import "./Header.css";
-import { AppState } from "../../store/configureStore";
+import { useAuth0 } from "@auth0/auth0-react";
+import { Button } from "primereact/button";
 
 export const Header = () => {
-    const dispatch = useDispatch();
-    const navigate = useNavigate();
-    const user = useSelector((state: AppState) => state.user);
-
-    const start = (
-        <Link to="/buildings/all" aria-label="Početak headera">
-            <i className="fas fa-building-user" />
-        </Link>
-    );
-
-    const end = (
-        <div className="header-end-section">
-            <Button label="User details" onClick={() => navigate(`/user/${user.guid}`)} />
-            <Button label="Logout" onClick={() => dispatch(logout())} />
-        </div>
-    );
+    const { logout, loginWithRedirect, isAuthenticated, isLoading } = useAuth0();
 
     return (
         <header>
-            <div className="menubar">
-                {start}
-                {/*}
-                <nav className="header-content">
-                    {headerItems.map(item => {
-                        return (
-                            <div key={item.link}>
-                                <Link className="menu-item" to={item.link} aria-label={item.label}>
-                                    <span>{item.label}</span>
-                                </Link>
+            {isLoading ? null : (
+                <>
+                    <div className="menubar">
+                        {isAuthenticated ? (
+                            <div className="header-end-buttons">
+                                <Button
+                                    label="Logout"
+                                    onClick={() =>
+                                        logout({
+                                            logoutParams: {
+                                                returnTo: "https://localhost:44378/",
+                                            },
+                                        })
+                                    }
+                                />
                             </div>
-                        );
-                    })}
-                </nav>*/}
-                {end}
-            </div>
+                        ) : (
+                            <div className="header-end-buttons">
+                                <Button
+                                    label="Login"
+                                    onClick={() => loginWithRedirect()}
+                                />
+                            </div>
+                        )}
+                    </div>
+                </>
+            )}
         </header>
     );
 };

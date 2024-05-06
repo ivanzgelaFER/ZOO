@@ -3,9 +3,18 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.8.34330.188
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZOO_Management", "ZOO_Management.csproj", "{1A6B680D-2FB9-4AC2-B8E1-66B7586AA421}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ZOO_Management", "ZOO_Management.csproj", "{1A6B680D-2FB9-4AC2-B8E1-66B7586AA421}"
+	ProjectSection(ProjectDependencies) = postProject
+		{3E30EA6A-7CFB-43B5-A793-DF753729656F} = {3E30EA6A-7CFB-43B5-A793-DF753729656F}
+		{41B6A9CD-FB86-4957-A927-E75D6E7AE48B} = {41B6A9CD-FB86-4957-A927-E75D6E7AE48B}
+		{F5D36454-0AFA-4BED-BAC6-F3B1067E0E49} = {F5D36454-0AFA-4BED-BAC6-F3B1067E0E49}
+	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZOO_Management.Data", "..\ZOO_Management.Data\ZOO_Management.Data.csproj", "{BE20B87B-AAF7-40CA-99E6-DF0116549A8A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZOO_Management.DomainServices", "..\ZOO_Management.DomainServices\ZOO_Management.DomainServices.csproj", "{3E30EA6A-7CFB-43B5-A793-DF753729656F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZOO_Management.DomainModel", "..\ZOO_Management.DomainModel\ZOO_Management.DomainModel.csproj", "{41B6A9CD-FB86-4957-A927-E75D6E7AE48B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZOO_Management.Infrastructure", "..\ZOO_Management.Infrastructure\ZOO_Management.Infrastructure.csproj", "{F5D36454-0AFA-4BED-BAC6-F3B1067E0E49}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,10 +26,18 @@ Global
 		{1A6B680D-2FB9-4AC2-B8E1-66B7586AA421}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1A6B680D-2FB9-4AC2-B8E1-66B7586AA421}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1A6B680D-2FB9-4AC2-B8E1-66B7586AA421}.Release|Any CPU.Build.0 = Release|Any CPU
-		{BE20B87B-AAF7-40CA-99E6-DF0116549A8A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{BE20B87B-AAF7-40CA-99E6-DF0116549A8A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{BE20B87B-AAF7-40CA-99E6-DF0116549A8A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{BE20B87B-AAF7-40CA-99E6-DF0116549A8A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3E30EA6A-7CFB-43B5-A793-DF753729656F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3E30EA6A-7CFB-43B5-A793-DF753729656F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3E30EA6A-7CFB-43B5-A793-DF753729656F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3E30EA6A-7CFB-43B5-A793-DF753729656F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{41B6A9CD-FB86-4957-A927-E75D6E7AE48B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{41B6A9CD-FB86-4957-A927-E75D6E7AE48B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{41B6A9CD-FB86-4957-A927-E75D6E7AE48B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{41B6A9CD-FB86-4957-A927-E75D6E7AE48B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F5D36454-0AFA-4BED-BAC6-F3B1067E0E49}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F5D36454-0AFA-4BED-BAC6-F3B1067E0E49}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F5D36454-0AFA-4BED-BAC6-F3B1067E0E49}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F5D36454-0AFA-4BED-BAC6-F3B1067E0E49}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

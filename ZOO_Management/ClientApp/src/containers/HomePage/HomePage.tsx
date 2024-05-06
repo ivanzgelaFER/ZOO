@@ -1,7 +1,6 @@
 import { Button } from "primereact/button";
 import "./HomePage.css";
 import { testDbConnection } from "../../api/test";
-import { getResidentialBuildings } from "../../api/residentialBuilding";
 
 export const HomePage = () => {
     const testConn = async () => {
