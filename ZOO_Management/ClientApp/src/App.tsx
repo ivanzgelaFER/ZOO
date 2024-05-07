@@ -5,7 +5,7 @@ import { HomePage } from "./containers/HomePage/HomePage";
 import { configureAxiosClient } from "./api/axiosClient";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useCallback, useEffect } from "react";
-import { CompetitionDetailsProtected } from "./containers/Competition/CompetitionDetailsProtected";
+import { Nastambe } from "./views/Nastambe/Nastambe";
 
 configureAxiosClient(axios);
 
@@ -15,8 +15,6 @@ export const App = () => {
 
     const getAccesToken = useCallback(async () => {
         try {
-            //const idTokenClaims = await getIdTokenClaims();
-            //const jwt: string = idTokenClaims?.__raw ?? "";
             const token = await getAccessTokenSilently();
             localStorage.setItem("token", token);
         } catch (error) {
@@ -30,11 +28,16 @@ export const App = () => {
 
     return (
         <Routes location={location}>
-            <Route index path="*" element={<HomePage />} />
             <Route
-                path={"/competition-details-protected"}
-                element={<CompetitionDetailsProtected />}
+                index
+                path="*"
+                element={<HomePage />}
+            />
+            <Route
+                path={"/nastambe"}
+                element={<Nastambe />}
             />
         </Routes>
     );
 };
+

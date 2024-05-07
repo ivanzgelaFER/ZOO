@@ -16,6 +16,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZOO_Management.DomainModel"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZOO_Management.Infrastructure", "..\ZOO_Management.Infrastructure\ZOO_Management.Infrastructure.csproj", "{F5D36454-0AFA-4BED-BAC6-F3B1067E0E49}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZOO_Management.ApplicationServices", "..\ZOO_Management.ApplicationServices\ZOO_Management.ApplicationServices.csproj", "{A0E3961C-D3FD-4217-822C-C56CABE0232E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -38,6 +40,10 @@ Global
 		{F5D36454-0AFA-4BED-BAC6-F3B1067E0E49}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F5D36454-0AFA-4BED-BAC6-F3B1067E0E49}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F5D36454-0AFA-4BED-BAC6-F3B1067E0E49}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A0E3961C-D3FD-4217-822C-C56CABE0232E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A0E3961C-D3FD-4217-822C-C56CABE0232E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A0E3961C-D3FD-4217-822C-C56CABE0232E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A0E3961C-D3FD-4217-822C-C56CABE0232E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

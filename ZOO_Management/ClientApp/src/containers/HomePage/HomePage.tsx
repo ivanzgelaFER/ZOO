@@ -1,25 +1,17 @@
-import { Button } from "primereact/button";
 import "./HomePage.css";
-import { testDbConnection } from "../../api/test";
+import { Button } from "primereact/button";
+import { useNavigate } from "react-router-dom";
 
 export const HomePage = () => {
-    const testConn = async () => {
-        try {
-            await testDbConnection();
-        } catch (error) {
-            console.log("error");
-        } finally {
-            console.log("finally");
-        }
-    };
+    const navigate = useNavigate();
 
     return (
         <div>
-            <h1>HELOOOOO</h1>
+            <h1>Početna stranica</h1>
             <Button
-                label="Add new"
+                label="Odi na nastambe"
                 icon="pi pi-plus"
-                onClick={() => testConn()}
+                onClick={() => navigate("/nastambe")}
             />
         </div>
     );
