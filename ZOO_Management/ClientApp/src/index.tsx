@@ -5,11 +5,9 @@ import { App } from "./App";
 import { PrivateRoute } from "./containers/Login/PrivateRoute";
 import reportWebVitals from "./reportWebVitals";
 import { Auth0Provider } from "@auth0/auth0-react";
-import { Competition } from "./containers/Competition/Competition";
 import { Layout } from "./containers/Layout/Layout";
 import "primereact/resources/primereact.min.css";
 import "primereact/resources/themes/lara-light-indigo/theme.css";
-import { CompetitionDetails } from "./containers/Competition/CompetitionDetails";
 import { disableReactDevTools } from "@fvilers/disable-react-devtools";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 
@@ -33,9 +31,15 @@ root.render(
         <BrowserRouter>
             <Layout>
                 <Routes>
-                    <Route path="/" element={<Competition />} />
-                    <Route path={"/competition-details"} element={<CompetitionDetails />} />
-                    <Route path="/*" element={<PrivateRoute path="/private" component={App} />} />
+                    <Route
+                        path="/*"
+                        element={
+                            <PrivateRoute
+                                path="/private"
+                                component={App}
+                            />
+                        }
+                    />
                 </Routes>
             </Layout>
         </BrowserRouter>
