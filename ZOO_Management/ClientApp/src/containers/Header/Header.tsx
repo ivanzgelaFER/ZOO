@@ -17,7 +17,7 @@ export const Header = () => {
                                     onClick={() =>
                                         logout({
                                             logoutParams: {
-                                                returnTo: "https://localhost:44378/",
+                                                returnTo: "https://localhost:5001/",
                                             },
                                         })
                                     }

@@ -29,7 +29,6 @@ export const App = () => {
     return (
         <Routes location={location}>
             <Route
-                index
                 path="*"
                 element={<HomePage />}
             />

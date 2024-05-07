@@ -6,7 +6,8 @@ type PrivateRouteProps = RouteProps & {
 };
 
 export const PrivateRoute = ({ component: Component, ...rest }: PrivateRouteProps) => {
-    const { isAuthenticated } = useAuth0();
+    //const { isAuthenticated } = useAuth0();
+    const isAuthenticated = true;
 
     if (isAuthenticated) {
         return <Component />;
