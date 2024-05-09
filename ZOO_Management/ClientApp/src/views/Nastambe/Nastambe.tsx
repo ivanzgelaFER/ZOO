@@ -13,11 +13,9 @@ import { getSektoriOptions } from "../../api/sektori";
 
 const cols = [
     { field: "idNastamba", header: "Identifikator", sortable: true },
+    { field: "tip", header: "Tip nastambe", sortable: false },
     { field: "velicina", header: "Valičina nastambe", sortable: true },
     { field: "kapacitet", header: "Kapacitet nastambe", sortable: true },
-    { field: "tip", header: "Tip nastambe", sortable: false },
-    { field: "naseljena", header: "Trenutno naseljena", sortable: false },
-    { field: "idSektor", header: "Sektor", sortable: false },
 ];
 
 export const Nastambe = () => {
@@ -64,7 +62,6 @@ export const Nastambe = () => {
     const fetchSektoriOptions = useCallback(async () => {
         try {
             const sektoriOptions = await getSektoriOptions();
-            console.log(sektoriOptions);
             setSektoriOptions(sektoriOptions);
         } catch (error) {
             dispatch(showToastMessage("Pogreška prilikom dohvaćanja sektora", "error"));
@@ -110,6 +107,18 @@ export const Nastambe = () => {
                             />
                         );
                     })}
+                    <Column
+                        key={"idSektor"}
+                        field={"idSektor"}
+                        header={"Sektor"}
+                        body={rowdata => sektoriOptions.find(x => x.value === rowdata.idSektor)?.label || ("" as any)}
+                    />
+                    <Column
+                        key={"naseljena"}
+                        field={"naseljena"}
+                        header={"Trenutno naseljena"}
+                        body={rowdata => (rowdata.naseljena ? "Da" : "Ne")}
+                    />
                     <Column
                         key={"Obriši"}
                         field={"idNastamba"}
