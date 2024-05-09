@@ -42,7 +42,6 @@
 	</ItemGroup>
 
   <ItemGroup>
-	  <ProjectReference Include="..\ZOO_Management.DomainModel\ZOO_Management.DomainModel.csproj" />
 	  <ProjectReference Include="..\ZOO_Management.DomainServices\ZOO_Management.DomainServices.csproj" />
 	  <ProjectReference Include="..\ZOO_Management.Infrastructure\ZOO_Management.Infrastructure.csproj" />
 	  <ProjectReference Include="..\ZOO_Management.ApplicationServices\ZOO_Management.ApplicationServices.csproj" />

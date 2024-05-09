@@ -9,7 +9,6 @@
 
 	<ItemGroup>
 		<ProjectReference Include="..\ZOO_Management.DomainServices\ZOO_Management.DomainServices.csproj" />
-		<ProjectReference Include="..\ZOO_Management.DomainModel\ZOO_Management.DomainModel.csproj" />
 	</ItemGroup>
  
 
