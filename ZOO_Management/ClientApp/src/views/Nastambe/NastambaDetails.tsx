@@ -46,19 +46,16 @@ export const NastambaDetails = () => {
 
     let resetForm = () => {};
 
-    const onSubmit = useCallback(
-        async (data: INastamba) => {
-            try {
-                const updatedNastambaId = await updateNastamba(data);
-                dispatch(showToastMessage(`Nastamba s id: ${updatedNastambaId} uspjesno izmjenjena`, "success"));
-            } catch (error) {
-                dispatch(showToastMessage("Greska prilikom izmjene nastambe", "error"));
-            } finally {
-                navigate("/nastambe");
-            }
-        },
-        [dispatch]
-    );
+    const onSubmit = async (data: INastamba) => {
+        try {
+            const updatedNastambaId = await updateNastamba(data);
+            dispatch(showToastMessage(`Nastamba s id: ${updatedNastambaId} uspjesno izmjenjena`, "success"));
+        } catch (error) {
+            dispatch(showToastMessage("Greska prilikom izmjene nastambe", "error"));
+        } finally {
+            navigate("/nastambe");
+        }
+    };
 
     const fetchZivotinjeByNastambaId = useCallback(async () => {
         try {

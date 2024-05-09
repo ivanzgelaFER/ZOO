@@ -12,7 +12,7 @@ export const createNewNastamba = async (newNastamba: INastamba) => {
 };
 
 export const updateNastamba = async (nastamba: INastamba) => {
-    const res = await axios.put(`/nastamba`, { nastamba });
+    const res = await axios.put(`/nastamba`, nastamba);
     return res.data;
 };
 
