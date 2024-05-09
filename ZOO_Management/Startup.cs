@@ -2,6 +2,9 @@
 using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
 using Microsoft.EntityFrameworkCore;
 using ZOO_Management.ApplicationServices.Services.Nastambe;
+using ZOO_Management.ApplicationServices.Services.Sektor;
+using ZOO_Management.ApplicationServices.Services.VrstaZivotinje;
+using ZOO_Management.ApplicationServices.Services.Zivotinje;
 using ZOO_Management.DomainModel.Models;
 using ZOO_Management.DomainServices.Interfaces.Repositories;
 using ZOO_Management.Extensions;
@@ -35,9 +38,13 @@ namespace ZOO_Management
 
             //SERVICES
             services.AddScoped<INastambeService, NastambeService>();
-        
+            services.AddScoped<IZivotinjeService, ZivotinjeService>();
+            services.AddScoped<ISektorService, SektorService>();
+            services.AddScoped<IVrstaZivotinjeService, VrstaZivotinjeService>();
+
             //REPOSITORIES
             services.AddScoped<INastambeRepository, NastambeRepository>();
+            services.AddScoped<IZivotinjeRepository, ZivotinjeRepository>();
         }
 
         public virtual void Configure(IApplicationBuilder app, IWebHostEnvironment env)

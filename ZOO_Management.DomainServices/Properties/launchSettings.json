@@ -1,0 +1,12 @@
+{
+  "profiles": {
+    "ZOO_Management.DomainServices": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "applicationUrl": "https://localhost:56444;http://localhost:56445"
+    }
+  }
+}

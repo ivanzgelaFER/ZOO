@@ -10,6 +10,9 @@ import "primereact/resources/primereact.min.css";
 import "primereact/resources/themes/lara-light-indigo/theme.css";
 import { disableReactDevTools } from "@fvilers/disable-react-devtools";
 import "@fortawesome/fontawesome-free/css/all.min.css";
+import { ToastMessage } from "./containers/ToastMessage/ToastMessage";
+import { Provider } from "react-redux";
+import { store } from "./store/configureStore";
 
 if (process.env.NODE_ENV === "production") {
     disableReactDevTools();
@@ -28,21 +31,24 @@ root.render(
             redirect_uri: window.location.origin,
         }}
     >
-        <BrowserRouter>
-            <Layout>
-                <Routes>
-                    <Route
-                        path="/*"
-                        element={
-                            <PrivateRoute
-                                path="/private"
-                                component={App}
-                            />
-                        }
-                    />
-                </Routes>
-            </Layout>
-        </BrowserRouter>
+        <Provider store={store}>
+            <BrowserRouter>
+                <Layout>
+                    <Routes>
+                        <Route
+                            path="/*"
+                            element={
+                                <PrivateRoute
+                                    path="/private"
+                                    component={App}
+                                />
+                            }
+                        />
+                    </Routes>
+                </Layout>
+            </BrowserRouter>
+            <ToastMessage />
+        </Provider>
     </Auth0Provider>
 );
 

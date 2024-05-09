@@ -1,30 +1,58 @@
-import { Button } from "primereact/button";
-import { DataTable } from "primereact/datatable";
 import "./Nastambe.css";
 import { useCallback, useEffect, useState } from "react";
 import { INastamba } from "../../models/nastambe";
 import { getAllNastambe } from "../../api/nastambe";
+import { useDispatch } from "react-redux";
+import { showToastMessage } from "../../actions/toastMessageActions";
+import { Button } from "primereact/button";
 import { Column } from "primereact/column";
+import { DataTable } from "primereact/datatable";
+import { useNavigate } from "react-router-dom";
 
 const cols = [
     { field: "idNastamba", header: "Identifikator", sortable: true },
     { field: "velicina", header: "Valičina nastambe", sortable: true },
-    { field: "kapacitet", header: "Kapacitet nastambe", sortable: false },
+    { field: "kapacitet", header: "Kapacitet nastambe", sortable: true },
     { field: "tip", header: "Tip nastambe", sortable: false },
     { field: "naseljena", header: "Trenutno naseljena", sortable: false },
 ];
 
 export const Nastambe = () => {
     const [nastambe, setNastambe] = useState<INastamba[]>([]);
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     const fetchNastambe = useCallback(async () => {
         try {
             const res = await getAllNastambe();
             setNastambe(res);
         } catch (error) {
-            //dispatch(showToastMessage("An error has occurred while fetching all satellites.", "error"));
+            dispatch(showToastMessage("Pogreska prilikom dohvata svih nastambi.", "error"));
         }
-    }, []);
+    }, [dispatch]);
+
+    const handleDeleteNastamba = async (rowData: INastamba) => {
+        try {
+            //TODO brisanje
+            dispatch(showToastMessage("Uspješno brisanje nastambe s id: " + rowData.idNastamba, "success"));
+            fetchNastambe();
+        } catch (err) {
+            dispatch(showToastMessage("Pogreška tijekom brisanja nastambe.", "error"));
+        }
+    };
+
+    const actionColumnDelete = (rowData: INastamba) => {
+        return (
+            <Button
+                className="button-delete-nastamba"
+                icon="fa fa-trash"
+                //tooltip={"Obriši"} POKAZUJE SE ISPOD FOOTERA IZ NEKOG RAZLOGA
+                onClick={() => {
+                    handleDeleteNastamba(rowData);
+                }}
+            />
+        );
+    };
 
     useEffect(() => {
         fetchNastambe();
@@ -36,16 +64,23 @@ export const Nastambe = () => {
             <div>
                 <div className="satelite-add-new">
                     <h3>Klikni na redak za više informacija!</h3>
-                    <Button label="Dodaj novu nastambu" />
+                    <Button
+                        label="Dodaj novu nastambu"
+                        icon="fa fa-plus"
+                        onClick={() => navigate("/nastamba-add")}
+                    />
                 </div>
                 <DataTable
                     resizableColumns
                     showGridlines
                     value={nastambe}
                     emptyMessage={"Trenutno nema zapisa."}
-                    responsiveLayout="stack"
                     onRowClick={rowData => {
-                        console.log(rowData);
+                        navigate("/nastamba-details", {
+                            state: {
+                                nastamba: nastambe.find(x => x.idNastamba === rowData.data.idNastamba),
+                            },
+                        });
                     }}
                 >
                     {cols.map(col => {
@@ -58,6 +93,12 @@ export const Nastambe = () => {
                             />
                         );
                     })}
+                    <Column
+                        key={"Obriši"}
+                        field={"idNastamba"}
+                        header={"Obriši"}
+                        body={actionColumnDelete}
+                    />
                 </DataTable>
             </div>
         </div>

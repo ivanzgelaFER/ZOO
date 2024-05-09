@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using ZOO_Management.ApplicationServices.Services.Nastambe;
+using ZOO_Management.DomainModel.RequestModels.Nastambe;
 
 namespace ZOO_Management.Controllers.V3
 {
@@ -19,6 +21,13 @@ namespace ZOO_Management.Controllers.V3
         public async Task<IActionResult> GetNastambeAsync()
         {
             return Ok(await _nastambeService.GetNastambeAsync());
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CreateNastambaAsync([FromBody] NastambaCreateNewRequest dto)
+        {
+            var rez = dto;
+            return Ok();
         }
     }
 }

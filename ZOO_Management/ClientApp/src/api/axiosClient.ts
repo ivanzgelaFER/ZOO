@@ -19,7 +19,6 @@ export const configureAxiosClient = (axios: AxiosStatic) => {
             return response;
         },
         error => {
-            console.error(error);
             return Promise.reject(error);
         }
     );

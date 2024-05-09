@@ -1,0 +1,100 @@
+.zoo-container {
+    margin: 20px 0 15px;
+    width: 100%;
+    z-index: 1;
+    position: relative;
+}
+
+.zoo-container .zoo-container-header {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+}
+
+.zoo-container .zoo-container-header h2 {
+    margin: 0;
+    margin-left: 20px;
+    padding: 10px 30px;
+    color: white;
+    font-weight: bold;
+    background-color: var(--primary-color);
+    border-radius: 15px;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+.zoo-container .zoo-container-header i.pi {
+    visibility: hidden;
+    align-self: center;
+    font-size: 36px;
+    color: #898989;
+    margin-left: 20px;
+    cursor: pointer;
+}
+
+.zoo-container .zoo-container-header i.zoo-container-back-icon {
+    visibility: visible;
+}
+
+.zoo-container .zoo-container-header .zoo-container-header-items {
+    margin-left: auto;
+    padding-bottom: 5px;
+}
+
+.zoo-container .zoo-container-header .zoo-container-header-items > * {
+    margin-left: 10px;
+}
+
+.zoo-container .zoo-container-header .zoo-container-header-items button {
+    flex-shrink: 0;
+}
+
+.zoo-container .zoo-container-header .zoo-container-title {
+    align-self: end;
+}
+
+.zoo-container .zoo-container-content {
+    background-color: white;
+    border-radius: 15px;
+    position: relative;
+    z-index: 1;
+}
+
+.zoo-container .zoo-container-content .content {
+    position: relative;
+    background-color: white;
+    border-radius: 15px;
+    padding: 30px 50px;
+    z-index: 2;
+    overflow: hidden;
+    min-height: 105px;
+    box-sizing: border-box;
+}
+
+.zoo-container .zoo-container-content.no-padding .content {
+    padding: 0;
+}
+
+.zoo-container .zoo-container-content.fullscreen .content {
+    min-height: calc(100vh - 244px);
+    display: flex;
+    flex-direction: column;
+}
+
+.zoo-container .zoo-container-content.centered-content .content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.zoo-container .zoo-container-content .content > .p-datatable:last-child .p-datatable-wrapper:last-child tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.zoo-container .zoo-container-content .p-tabview-nav-next {
+    display: none;
+}
+
+.zoo-container:has(.add-form) {
+    max-width: 50%;
+}
