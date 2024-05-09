@@ -8,6 +8,8 @@ import { Button } from "primereact/button";
 import { Column } from "primereact/column";
 import { DataTable } from "primereact/datatable";
 import { useNavigate } from "react-router-dom";
+import { SelectItem } from "primereact/selectitem";
+import { getSektoriOptions } from "../../api/sektori";
 
 const cols = [
     { field: "idNastamba", header: "Identifikator", sortable: true },
@@ -15,12 +17,15 @@ const cols = [
     { field: "kapacitet", header: "Kapacitet nastambe", sortable: true },
     { field: "tip", header: "Tip nastambe", sortable: false },
     { field: "naseljena", header: "Trenutno naseljena", sortable: false },
+    { field: "idSektor", header: "Sektor", sortable: false },
 ];
 
 export const Nastambe = () => {
     const [nastambe, setNastambe] = useState<INastamba[]>([]);
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const [loading, setLoading] = useState(false);
+    const [sektoriOptions, setSektoriOptions] = useState<SelectItem[]>([]);
 
     const fetchNastambe = useCallback(async () => {
         try {
@@ -57,6 +62,23 @@ export const Nastambe = () => {
     useEffect(() => {
         fetchNastambe();
     }, [fetchNastambe]);
+
+    const fetchSektoriOptions = useCallback(async () => {
+        setLoading(true);
+        try {
+            const sektoriOptions = await getSektoriOptions();
+            console.log(sektoriOptions);
+            setSektoriOptions(sektoriOptions);
+        } catch (error) {
+            dispatch(showToastMessage("Pogreška prilikom dohvaćanja sektora", "error"));
+        } finally {
+            setLoading(false);
+        }
+    }, [dispatch]);
+
+    useEffect(() => {
+        fetchSektoriOptions();
+    }, [fetchSektoriOptions]);
 
     return (
         <div className="nastambe-container">

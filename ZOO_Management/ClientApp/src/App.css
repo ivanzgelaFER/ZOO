@@ -89,3 +89,7 @@ table.dataview tr th:last-child {
 table.dataview tr td p {
     margin: 0;
 }
+
+.form-container .field .p-dropdown {
+    width: 100%;
+}

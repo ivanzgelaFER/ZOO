@@ -9,5 +9,7 @@
         public string Tip { get; set; }
 
         public bool? Naseljena { get; set; }
+
+        public int? IdSektor { get; set; }
     }
 }

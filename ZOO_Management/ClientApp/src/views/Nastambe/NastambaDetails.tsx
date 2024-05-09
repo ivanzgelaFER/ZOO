@@ -14,6 +14,11 @@ import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { getZivotinjeByNastambaId } from "../../api/zivotinje";
 import { IZivotinja } from "../../models/zivotinja";
+import { InputSwitch } from "primereact/inputswitch";
+import { InputNumber } from "primereact/inputnumber";
+import { Dropdown } from "primereact/dropdown";
+import { getSektoriOptions } from "../../api/sektori";
+import { SelectItem } from "primereact/selectitem";
 
 interface ILocationState {
     nastamba: INastamba;
@@ -34,6 +39,8 @@ export const NastambaDetails = () => {
     const [nastamba, setNastamba] = useState((location.state as ILocationState)?.nastamba);
     const [editMode, setEditMode] = useState(false);
     const [zivotinje, setZivotinje] = useState<IZivotinja[]>([]);
+    const [loading, setLoading] = useState(false);
+    const [sektoriOptions, setSektoriOptions] = useState<SelectItem[]>([]);
 
     const dispatch = useDispatch();
 
@@ -86,6 +93,28 @@ export const NastambaDetails = () => {
         );
     };
 
+    const fetchSektoriOptions = useCallback(async () => {
+        setLoading(true);
+        try {
+            const sektoriOptions = await getSektoriOptions();
+            setSektoriOptions(sektoriOptions);
+        } catch (error) {
+            dispatch(showToastMessage("Pogreška prilikom dohvaćanja sektora", "error"));
+        } finally {
+            setLoading(false);
+        }
+    }, [dispatch]);
+
+    useEffect(() => {
+        fetchSektoriOptions();
+    }, [fetchSektoriOptions]);
+
+    const sektorOptionDisplay = (id: number) => {
+        if (id === -1) return "Trenutno nema dodijeljen sektor";
+        sektoriOptions.forEach((sektor: SelectItem) => {
+            return sektor.value === id ? sektor.label : "";
+        });
+    };
     return (
         <div className="nastamba-details-container">
             <div>
@@ -153,7 +182,7 @@ export const NastambaDetails = () => {
                                                     editMode={editMode}
                                                     name="velicina"
                                                     fieldRender={(input, hasErrors) => (
-                                                        <InputText
+                                                        <InputNumber
                                                             className={classNames({
                                                                 "p-invalid": hasErrors,
                                                             })}
@@ -173,7 +202,7 @@ export const NastambaDetails = () => {
                                                     editMode={editMode}
                                                     name="kapacitet"
                                                     fieldRender={(input, hasErrors) => (
-                                                        <InputText
+                                                        <InputNumber
                                                             className={classNames({
                                                                 "p-invalid": hasErrors,
                                                             })}
@@ -204,6 +233,24 @@ export const NastambaDetails = () => {
                                                 />
                                             </td>
                                         </tr>
+
+                                        <tr>
+                                            <th>Sektor</th>
+                                            <td>
+                                                <FieldOrDisplay
+                                                    editMode={editMode}
+                                                    name={"idSektor"}
+                                                    fieldRender={input => (
+                                                        <Dropdown
+                                                            id={"idSektor"}
+                                                            {...input}
+                                                            options={sektoriOptions}
+                                                        />
+                                                    )}
+                                                    displayRender={sektorOptionDisplay(nastamba.idSektor ?? -1)}
+                                                />
+                                            </td>
+                                        </tr>
                                         <tr>
                                             <th>
                                                 <strong>Nastamba naseljena</strong>
@@ -212,15 +259,19 @@ export const NastambaDetails = () => {
                                                 <FieldOrDisplay
                                                     editMode={editMode}
                                                     name="naseljena"
-                                                    fieldRender={(input, hasErrors) => (
-                                                        <InputText
-                                                            className={classNames({
-                                                                "p-invalid": hasErrors,
-                                                            })}
+                                                    type="checkbox"
+                                                    fieldRender={input => (
+                                                        <InputSwitch
                                                             {...input}
+                                                            checked={input.checked ?? false}
                                                         />
                                                     )}
-                                                    displayRender={<span>{nastamba.naseljena}</span>}
+                                                    displayRender={
+                                                        <InputSwitch
+                                                            disabled
+                                                            checked={nastamba.naseljena ?? false}
+                                                        />
+                                                    }
                                                 />
                                             </td>
                                         </tr>

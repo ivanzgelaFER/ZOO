@@ -4,12 +4,10 @@ export interface INastamba {
     kapacitet?: number;
     tip?: string;
     naseljena?: boolean;
+    idSektor?: number;
 }
 
 export const nastambaInit: INastamba = {
-    idNastamba: undefined,
-    velicina: undefined,
-    kapacitet: undefined,
     tip: "",
     naseljena: false,
 };

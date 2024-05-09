@@ -1,7 +1,7 @@
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { showToastMessage } from "../../actions/toastMessageActions";
-import { useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Field, Form } from "react-final-form";
 import { Button } from "primereact/button";
 import { InputText } from "primereact/inputtext";
@@ -9,11 +9,17 @@ import "./Nastambe.css";
 import { ZooContainer } from "../../containers/ZooContainer/ZooContainer";
 import { INastamba, nastambaInit } from "../../models/nastambe";
 import { createNewNastamba } from "../../api/nastambe";
+import { Checkbox } from "primereact/checkbox";
+import { getSektoriOptions } from "../../api/sektori";
+import { Dropdown } from "primereact/dropdown";
+import { SelectItem } from "primereact/selectitem";
+import { InputNumber, InputNumberValueChangeEvent } from "primereact/inputnumber";
 
 export const NastambaForm = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const [loading, setLoading] = useState(false);
+    const [sektoriOptions, setSektoriOptions] = useState<SelectItem[]>([]);
 
     const onSubmit = async (data: INastamba) => {
         setLoading(true);
@@ -28,6 +34,23 @@ export const NastambaForm = () => {
             navigate("/nastambe");
         }
     };
+
+    const fetchSektoriOptions = useCallback(async () => {
+        setLoading(true);
+        try {
+            const sektoriOptions = await getSektoriOptions();
+            console.log(sektoriOptions);
+            setSektoriOptions(sektoriOptions);
+        } catch (error) {
+            dispatch(showToastMessage("Pogreška prilikom dohvaćanja sektora", "error"));
+        } finally {
+            setLoading(false);
+        }
+    }, [dispatch]);
+
+    useEffect(() => {
+        fetchSektoriOptions();
+    }, [fetchSektoriOptions]);
 
     return (
         <ZooContainer
@@ -49,7 +72,7 @@ export const NastambaForm = () => {
                                 render={({ input }) => (
                                     <div className="field">
                                         <span className="p-float-label">
-                                            <InputText
+                                            <InputNumber
                                                 id="velicina"
                                                 {...input}
                                             />
@@ -63,7 +86,7 @@ export const NastambaForm = () => {
                                 render={({ input }) => (
                                     <div className="field">
                                         <span className="p-float-label">
-                                            <InputText
+                                            <InputNumber
                                                 id="kapacitet"
                                                 {...input}
                                             />
@@ -87,15 +110,39 @@ export const NastambaForm = () => {
                                 )}
                             />
                             <Field
-                                name="naseljena"
+                                name="idSektor"
                                 render={({ input }) => (
                                     <div className="field">
                                         <span className="p-float-label">
-                                            <InputText
-                                                id="naseljena"
+                                            <Dropdown
+                                                id="idSektor"
                                                 {...input}
+                                                options={sektoriOptions}
+                                                optionLabel="label"
+                                                optionValue="value"
                                             />
-                                            <label htmlFor="naseljena">Tip nastambe</label>
+                                            <label>Sektor</label>
+                                        </span>
+                                    </div>
+                                )}
+                            />
+                            <Field
+                                name="naseljena"
+                                type="checkbox"
+                                render={({ input }) => (
+                                    <div className="field">
+                                        <span className="p-float-label">
+                                            <Checkbox
+                                                {...input}
+                                                checked={input.checked ?? false}
+                                                id="naseljena"
+                                            />
+                                            <label
+                                                className="checkbox-nastambe"
+                                                htmlFor="naseljena"
+                                            >
+                                                Naseljena
+                                            </label>
                                         </span>
                                     </div>
                                 )}

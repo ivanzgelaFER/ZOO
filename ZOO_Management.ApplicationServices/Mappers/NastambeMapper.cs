@@ -17,7 +17,8 @@ namespace ZOO_Management.ApplicationServices.Mappers
                     Velicina = n.Velicina,
                     Kapacitet = n.Kapacitet,
                     Naseljena = n.Naseljena,
-                    Tip = n.Tip
+                    Tip = n.Tip,
+                    IdSektor = n.IdSektor,
                 });
             }
 

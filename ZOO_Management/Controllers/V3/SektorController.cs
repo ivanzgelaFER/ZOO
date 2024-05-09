@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using ZOO_Management.ApplicationServices.Services.Sektori;
 
 namespace ZOO_Management.Controllers.V3
 {
@@ -7,9 +8,18 @@ namespace ZOO_Management.Controllers.V3
     [Route("api/v{version:apiVersion}/[controller]")]
     public class SektorController : Controller
     {
-        public IActionResult Index()
+        public readonly ISektorService _sektorService;
+
+        public SektorController(ISektorService sektorService)
         {
-            return View();
+            _sektorService = sektorService;
+        }
+
+        [HttpGet("options")]
+        public async Task<IActionResult> getSektoriOptions()
+        {
+            return Ok(await _sektorService.getSektoriOptions());
+            
         }
     }
 }
