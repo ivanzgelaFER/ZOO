@@ -1,4 +1,5 @@
 ﻿using ZOO_Management.DomainModel.Models;
+using ZOO_Management.DomainModel.RequestModels.Nastambe;
 using ZOO_Management.DomainModel.ResponseModels.Nastambe;
 
 namespace ZOO_Management.ApplicationServices.Mappers
@@ -23,6 +24,30 @@ namespace ZOO_Management.ApplicationServices.Mappers
             }
 
             return nastambeGetResponses;
+        }
+
+        public static Nastamba MapNastambaCreateNewRequestToNastamba(NastambaCreateNewRequest request)
+        {
+            return new Nastamba {
+                Velicina = request.Velicina,
+                Kapacitet = request.Kapacitet,
+                Tip = request.Tip,
+                Naseljena = request.Naseljena,
+                IdSektor = request.IdSektor,
+            };
+        }
+
+        public static Nastamba MapNastambaUpdateRequestToNastamba(NastambaUpdateRequest request)
+        {
+            return new Nastamba
+            {
+                IdNastamba = request.IdNastamba,
+                Velicina = request.Velicina,
+                Kapacitet = request.Kapacitet,
+                Tip = request.Tip,
+                Naseljena = request.Naseljena,
+                IdSektor = request.IdSektor,
+            };
         }
     }
 }

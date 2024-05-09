@@ -1,7 +1,7 @@
 import "./Nastambe.css";
 import { useCallback, useEffect, useState } from "react";
 import { INastamba } from "../../models/nastambe";
-import { getAllNastambe } from "../../api/nastambe";
+import { deleteNastamba, getAllNastambe } from "../../api/nastambe";
 import { useDispatch } from "react-redux";
 import { showToastMessage } from "../../actions/toastMessageActions";
 import { Button } from "primereact/button";
@@ -24,7 +24,6 @@ export const Nastambe = () => {
     const [nastambe, setNastambe] = useState<INastamba[]>([]);
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const [loading, setLoading] = useState(false);
     const [sektoriOptions, setSektoriOptions] = useState<SelectItem[]>([]);
 
     const fetchNastambe = useCallback(async () => {
@@ -38,8 +37,8 @@ export const Nastambe = () => {
 
     const handleDeleteNastamba = async (rowData: INastamba) => {
         try {
-            //TODO brisanje
-            dispatch(showToastMessage("Uspješno brisanje nastambe s id: " + rowData.idNastamba, "success"));
+            const deletedId = await deleteNastamba(rowData.idNastamba!);
+            dispatch(showToastMessage("Uspješno brisanje nastambe s id: " + deletedId, "success"));
             fetchNastambe();
         } catch (err) {
             dispatch(showToastMessage("Pogreška tijekom brisanja nastambe.", "error"));
@@ -51,7 +50,6 @@ export const Nastambe = () => {
             <Button
                 className="button-delete-nastamba"
                 icon="fa fa-trash"
-                //tooltip={"Obriši"} POKAZUJE SE ISPOD FOOTERA IZ NEKOG RAZLOGA
                 onClick={() => {
                     handleDeleteNastamba(rowData);
                 }}
@@ -64,15 +62,12 @@ export const Nastambe = () => {
     }, [fetchNastambe]);
 
     const fetchSektoriOptions = useCallback(async () => {
-        setLoading(true);
         try {
             const sektoriOptions = await getSektoriOptions();
             console.log(sektoriOptions);
             setSektoriOptions(sektoriOptions);
         } catch (error) {
             dispatch(showToastMessage("Pogreška prilikom dohvaćanja sektora", "error"));
-        } finally {
-            setLoading(false);
         }
     }, [dispatch]);
 
@@ -84,7 +79,7 @@ export const Nastambe = () => {
         <div className="nastambe-container">
             <h1>Nastambe</h1>
             <div>
-                <div className="satelite-add-new">
+                <div className="nastamba-add-new">
                     <h3>Klikni na redak za više informacija!</h3>
                     <Button
                         label="Dodaj novu nastambu"

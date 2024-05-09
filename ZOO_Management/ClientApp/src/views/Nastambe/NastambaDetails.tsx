@@ -19,6 +19,7 @@ import { InputNumber } from "primereact/inputnumber";
 import { Dropdown } from "primereact/dropdown";
 import { getSektoriOptions } from "../../api/sektori";
 import { SelectItem } from "primereact/selectitem";
+import { updateNastamba } from "../../api/nastambe";
 
 interface ILocationState {
     nastamba: INastamba;
@@ -39,7 +40,6 @@ export const NastambaDetails = () => {
     const [nastamba, setNastamba] = useState((location.state as ILocationState)?.nastamba);
     const [editMode, setEditMode] = useState(false);
     const [zivotinje, setZivotinje] = useState<IZivotinja[]>([]);
-    const [loading, setLoading] = useState(false);
     const [sektoriOptions, setSektoriOptions] = useState<SelectItem[]>([]);
 
     const dispatch = useDispatch();
@@ -49,9 +49,12 @@ export const NastambaDetails = () => {
     const onSubmit = useCallback(
         async (data: INastamba) => {
             try {
-                dispatch(showToastMessage("Nastamba uspješno izmjenjena", "success"));
+                const updatedNastambaId = await updateNastamba(data);
+                dispatch(showToastMessage(`Nastamba s id: ${updatedNastambaId} uspjesno izmjenjena`, "success"));
             } catch (error) {
-                dispatch(showToastMessage("Greška prilikom izmjene nastambe", "error"));
+                dispatch(showToastMessage("Greska prilikom izmjene nastambe", "error"));
+            } finally {
+                navigate("/nastambe");
             }
         },
         [dispatch]
@@ -94,14 +97,11 @@ export const NastambaDetails = () => {
     };
 
     const fetchSektoriOptions = useCallback(async () => {
-        setLoading(true);
         try {
             const sektoriOptions = await getSektoriOptions();
             setSektoriOptions(sektoriOptions);
         } catch (error) {
             dispatch(showToastMessage("Pogreška prilikom dohvaćanja sektora", "error"));
-        } finally {
-            setLoading(false);
         }
     }, [dispatch]);
 

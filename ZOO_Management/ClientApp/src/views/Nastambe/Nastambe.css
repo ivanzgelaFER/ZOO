@@ -15,3 +15,21 @@
 .checkbox-nastambe {
     margin-left: 20px;
 }
+
+.nastamba-add-new {
+    display: flex;
+    justify-content: space-between;
+}
+
+.nastamba-add-new > button {
+    margin-right: 0px;
+    height: 3rem;
+}
+
+.nastamba-form-back-action {
+    padding-top: 20px;
+}
+
+.zoo-container-header {
+    padding-bottom: 0px !important;
+}

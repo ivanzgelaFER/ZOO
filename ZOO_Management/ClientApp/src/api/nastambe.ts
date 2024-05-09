@@ -10,3 +10,13 @@ export const createNewNastamba = async (newNastamba: INastamba) => {
     const res = await axios.post("/nastamba", newNastamba);
     return res.data;
 };
+
+export const updateNastamba = async (nastamba: INastamba) => {
+    const res = await axios.put(`/nastamba`, { nastamba });
+    return res.data;
+};
+
+export const deleteNastamba = async (id: number) => {
+    const res = await axios.delete(`/nastamba/${id}`);
+    return res.data;
+};

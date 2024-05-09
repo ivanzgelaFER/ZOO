@@ -24,10 +24,21 @@ namespace ZOO_Management.Controllers.V3
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateNastambaAsync([FromBody] NastambaCreateNewRequest dto)
+        public async Task<IActionResult> CreateNastambaAsync([FromBody] NastambaCreateNewRequest request)
         {
-            var rez = dto;
-            return Ok();
+            return Ok(await _nastambeService.CreateNastambaAsync(request));
+        }
+
+        [HttpPut]
+        public async Task<IActionResult> UpdateNastambaAsync([FromBody] NastambaUpdateRequest request)
+        {
+            return Ok(await _nastambeService.UpdateNastambaAsync(request));
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteJobTitle([FromRoute] int id)
+        {
+            return Ok(await _nastambeService.DeleteNastambaAsync(id));
         }
     }
 }
