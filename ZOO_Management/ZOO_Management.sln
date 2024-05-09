@@ -18,6 +18,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZOO_Management.Infrastructu
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZOO_Management.ApplicationServices", "..\ZOO_Management.ApplicationServices\ZOO_Management.ApplicationServices.csproj", "{A0E3961C-D3FD-4217-822C-C56CABE0232E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZOO_Managment.DomainModel.Validation", "..\ZOO_Managment.DomainModel.Validation\ZOO_Managment.DomainModel.Validation.csproj", "{E8FB392A-ACFE-4589-A40F-17253E702175}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -44,6 +46,10 @@ Global
 		{A0E3961C-D3FD-4217-822C-C56CABE0232E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A0E3961C-D3FD-4217-822C-C56CABE0232E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A0E3961C-D3FD-4217-822C-C56CABE0232E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E8FB392A-ACFE-4589-A40F-17253E702175}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E8FB392A-ACFE-4589-A40F-17253E702175}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E8FB392A-ACFE-4589-A40F-17253E702175}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E8FB392A-ACFE-4589-A40F-17253E702175}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
