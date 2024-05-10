@@ -6,6 +6,11 @@ export const getAllNastambe = async () => {
     return res.data;
 };
 
+export const getNastambaById = async (id: number) => {
+    const res = await axios.get(`nastamba/${id}`);
+    return res.data;
+};
+
 export const createNewNastamba = async (newNastamba: INastamba) => {
     const res = await axios.post("/nastamba", newNastamba);
     return res.data;

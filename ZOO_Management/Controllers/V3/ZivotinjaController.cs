@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using ZOO_Management.ApplicationServices.Services.Nastambe;
 using ZOO_Management.ApplicationServices.Services.Zivotinje;
-using ZOO_Management.DomainModel.Models;
+using ZOO_Management.DomainModel.RequestModels.Nastambe;
+using ZOO_Management.DomainModel.ResponseModels.Zivotinje;
 
 namespace ZOO_Management.Controllers.V3
 {
@@ -17,10 +17,16 @@ namespace ZOO_Management.Controllers.V3
             _zivotinjeService = zivotinjeService;
         }
 
-        [HttpGet("{nastambaId}/getByNastambaId")]
-        public async Task<IActionResult> GetByNastambaIdAsync([FromRoute] int nastambaId)
+        [HttpGet]
+        public async Task<IActionResult> GetZivotinjeAsync()
         {
-            return Ok(await _zivotinjeService.GetByNastambaIdAsync(nastambaId));
+            return Ok();
+        }
+
+        [HttpPut]
+        public async Task<IActionResult> UpdateNastambaAsync([FromBody] ZivotinjaUpdateRequest request)
+        {
+            return Ok(_zivotinjeService.UpdateZivotinjaAsync(request));
         }
     }
 }

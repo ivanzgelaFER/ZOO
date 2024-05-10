@@ -17,5 +17,13 @@ namespace ZOO_Management.Infrastructure.Repositories
         {
             return await _ctx.Zivotinja.Where(z => z.IdNastamba == nastambaId).ToListAsync();
         }
+
+        public async Task<int> UpdateZivotinjaAsync(Zivotinja zivotinja)
+        {
+            _ctx.Zivotinja.Update(zivotinja);
+            await _ctx.SaveChangesAsync();
+
+            return zivotinja.IdZivotinja;
+        }
     }
 }

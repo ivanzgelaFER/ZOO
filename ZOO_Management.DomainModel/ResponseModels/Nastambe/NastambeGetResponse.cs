@@ -1,4 +1,6 @@
-﻿namespace ZOO_Management.DomainModel.ResponseModels.Nastambe
+﻿using ZOO_Management.DomainModel.ResponseModels.Zivotinje;
+
+namespace ZOO_Management.DomainModel.ResponseModels.Nastambe
 {
     public class NastambeGetResponse
     {
@@ -13,5 +15,7 @@
         public bool? Naseljena { get; set; }
 
         public int? IdSektor { get; set; }
+
+        public List<ZivotinjeGetByNastambaIdResponse> Zivotinje { get; set; }
     }
 }

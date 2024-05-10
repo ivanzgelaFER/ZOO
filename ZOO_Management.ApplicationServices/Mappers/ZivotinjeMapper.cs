@@ -1,4 +1,5 @@
 ﻿using ZOO_Management.DomainModel.Models;
+using ZOO_Management.DomainModel.RequestModels.Nastambe;
 using ZOO_Management.DomainModel.ResponseModels.Nastambe;
 using ZOO_Management.DomainModel.ResponseModels.Zivotinje;
 
@@ -24,6 +25,17 @@ namespace ZOO_Management.ApplicationServices.Mappers
             }
 
             return zivotinjeGetByNastambaIdResponse;
+        }
+        public static Zivotinja MapZivotinjaUpdateRequestToZivotinja(ZivotinjaUpdateRequest request)
+        {
+            return new Zivotinja
+            {
+                IdZivotinja = request.IdZivotinja,
+                Starost = request.Starost,
+                Kilaza = request.Kilaza,
+                Ime = request.Ime
+            };
+
         }
     }
 }

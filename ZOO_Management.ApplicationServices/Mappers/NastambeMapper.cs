@@ -1,4 +1,5 @@
-﻿using ZOO_Management.DomainModel.Models;
+﻿using Org.BouncyCastle.Asn1.Crmf;
+using ZOO_Management.DomainModel.Models;
 using ZOO_Management.DomainModel.RequestModels.Nastambe;
 using ZOO_Management.DomainModel.ResponseModels.Nastambe;
 
@@ -47,6 +48,19 @@ namespace ZOO_Management.ApplicationServices.Mappers
                 Tip = request.Tip,
                 Naseljena = request.Naseljena,
                 IdSektor = request.IdSektor,
+            };
+        }
+
+        public static NastambeGetResponse MapNastambaToNastambeGetResponse(Nastamba nastamba)
+        {
+            return new NastambeGetResponse
+            {
+                IdNastamba = nastamba.IdNastamba,
+                Velicina = nastamba.Velicina,
+                Kapacitet = nastamba.Kapacitet,
+                Naseljena = nastamba.Naseljena,
+                Tip = nastamba.Tip,
+                IdSektor = nastamba.IdSektor,
             };
         }
     }

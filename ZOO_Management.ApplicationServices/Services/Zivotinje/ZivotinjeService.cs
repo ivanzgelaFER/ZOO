@@ -20,5 +20,11 @@ namespace ZOO_Management.ApplicationServices.Services.Zivotinje
             List<ZivotinjeGetByNastambaIdResponse> response = ZivotinjeMapper.MapZivotinjeToZivotinjeGetByNastambaIdResponse(zivotinje);
             return response;
         }
+
+        public async Task<int> UpdateZivotinjaAsync(ZivotinjaUpdateRequest request)
+        {
+            Zivotinja zivotinja = ZivotinjeMapper.MapZivotinjaUpdateRequestToZivotinja(request);
+            return await _zivotinjeRepository.UpdateZivotinjaAsync(zivotinja);
+        }
     }
 }

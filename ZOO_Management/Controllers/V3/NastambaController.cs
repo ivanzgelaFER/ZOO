@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using ZOO_Management.ApplicationServices.Services.Nastambe;
 using ZOO_Management.DomainModel.RequestModels.Nastambe;
 
@@ -21,6 +20,12 @@ namespace ZOO_Management.Controllers.V3
         public async Task<IActionResult> GetNastambeAsync()
         {
             return Ok(await _nastambeService.GetNastambeAsync());
+        }
+
+        [HttpGet("{id")]
+        public async Task<IActionResult> GetNastambeAsync([FromRoute] int id)
+        {
+            return Ok(await _nastambeService.GetNastambaByIdAsync(id));
         }
 
         [HttpPost]

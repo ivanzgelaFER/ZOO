@@ -2,7 +2,7 @@ import "./Nastambe.css";
 import { useCallback, useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { INastamba } from "../../models/nastambe";
-import { Form } from "react-final-form";
+import { Field, Form } from "react-final-form";
 import { useDispatch } from "react-redux";
 import { showToastMessage } from "../../actions/toastMessageActions";
 import { FieldOrDisplay, submitFormWithId } from "../../helpers/FormsHelper";
@@ -12,14 +12,15 @@ import { ZooContainer } from "../../containers/ZooContainer/ZooContainer";
 import { Button } from "primereact/button";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
-import { getZivotinjeByNastambaId } from "../../api/zivotinje";
-import { IZivotinja } from "../../models/zivotinja";
 import { InputSwitch } from "primereact/inputswitch";
 import { InputNumber } from "primereact/inputnumber";
 import { Dropdown } from "primereact/dropdown";
 import { getSektoriOptions } from "../../api/sektori";
 import { SelectItem } from "primereact/selectitem";
-import { updateNastamba } from "../../api/nastambe";
+import { getNastambaById, updateNastamba } from "../../api/nastambe";
+import { Dialog } from "primereact/dialog";
+import { IZivotinja } from "../../models/zivotinja";
+import { updateZivotinja } from "../../api/zivotinje";
 
 interface ILocationState {
     nastamba: INastamba;
@@ -39,10 +40,10 @@ export const NastambaDetails = () => {
     const navigate = useNavigate();
     const [nastamba, setNastamba] = useState((location.state as ILocationState)?.nastamba);
     const [editMode, setEditMode] = useState(false);
-    const [zivotinje, setZivotinje] = useState<IZivotinja[]>([]);
     const [sektoriOptions, setSektoriOptions] = useState<SelectItem[]>([]);
-
+    const [dialogOpen, setDialogOpen] = useState(false);
     const dispatch = useDispatch();
+    const [zivotinjaForEdit, setZivotinjaForEdit] = useState<IZivotinja>();
 
     let resetForm = () => {};
 
@@ -50,32 +51,30 @@ export const NastambaDetails = () => {
         try {
             const updatedNastambaId = await updateNastamba(data);
             dispatch(showToastMessage(`Nastamba s id: ${updatedNastambaId} uspjesno izmjenjena`, "success"));
+            var nastambaRes = await getNastambaById(updatedNastambaId);
+            setNastamba(nastambaRes);
         } catch (error) {
             dispatch(showToastMessage("Greska prilikom izmjene nastambe", "error"));
-        } finally {
-            navigate("/nastambe");
         }
     };
 
-    const fetchZivotinjeByNastambaId = useCallback(async () => {
+    const onSubmitEditZivotinja = async (data: IZivotinja) => {
         try {
-            const res = await getZivotinjeByNastambaId(nastamba.idNastamba!);
-            setZivotinje(res);
+            const updatedZivotinjaId = await updateZivotinja(data);
+            dispatch(showToastMessage(`Zivotinja s id: ${updatedZivotinjaId} uspjesno izmjenjena`, "success"));
         } catch (error) {
-            dispatch(showToastMessage("Pogreska prilikom dohvata svih nastambi.", "error"));
+            dispatch(showToastMessage("Greska prilikom izmjene nastambe", "error"));
+        } finally {
+            setDialogOpen(false);
         }
-    }, [dispatch, nastamba.idNastamba]);
-
-    useEffect(() => {
-        fetchZivotinjeByNastambaId();
-    }, [fetchZivotinjeByNastambaId]);
-
-    const actionColumnEdit = (rowData: INastamba) => {
+    };
+    const actionColumnEdit = (rowData: IZivotinja) => {
         return (
             <Button
                 icon="fa fa-pencil"
                 onClick={() => {
-                    //handleDeleteNastamba(rowData);
+                    setZivotinjaForEdit(rowData);
+                    setDialogOpen(true);
                 }}
             />
         );
@@ -284,7 +283,7 @@ export const NastambaDetails = () => {
                 <DataTable
                     resizableColumns
                     showGridlines
-                    value={zivotinje}
+                    value={nastamba.zivotinje ?? []}
                     emptyMessage={"Trenutno nema zapisa."}
                     onRowClick={rowData => {}}
                 >
@@ -312,6 +311,82 @@ export const NastambaDetails = () => {
                     />
                 </DataTable>
             </div>
+            <Dialog
+                visible={dialogOpen}
+                id="edit-zivotinja"
+                header={`Uredi podatke o životinji:  `}
+                draggable={false}
+                onHide={() => setDialogOpen(false)}
+            >
+                <Form
+                    onSubmit={(data: IZivotinja) => onSubmitEditZivotinja(data)}
+                    initialValues={zivotinjaForEdit}
+                    render={({ handleSubmit }) => (
+                        <form
+                            id="edit-zivotinja"
+                            onSubmit={handleSubmit}
+                            className="form-container"
+                            autoComplete="off"
+                        >
+                            <Field
+                                name="ime"
+                                render={({ input }) => (
+                                    <div className="field">
+                                        <span>Ime</span>
+                                        <span className="p-float-label">
+                                            <InputText
+                                                id="ime"
+                                                {...input}
+                                            />
+                                        </span>
+                                    </div>
+                                )}
+                            />
+                            <Field
+                                name="kilaza"
+                                render={({ input }) => (
+                                    <div className="field">
+                                        <span>Kilaža</span>
+                                        <span className="p-float-label">
+                                            <InputNumber
+                                                id="kilaza"
+                                                {...input}
+                                            />
+                                        </span>
+                                    </div>
+                                )}
+                            />
+                            <Field
+                                name="starost"
+                                render={({ input }) => (
+                                    <div className="field">
+                                        <span>Starost</span>
+                                        <span className="p-float-label">
+                                            <InputNumber
+                                                id="starost"
+                                                {...input}
+                                            />
+                                        </span>
+                                    </div>
+                                )}
+                            />
+                            <div className="submit-buttons-in-modal">
+                                <Button
+                                    label="Cancel"
+                                    onClick={() => setDialogOpen(false)}
+                                    icon="pi pi-times"
+                                    type="button"
+                                />
+                                <Button
+                                    label="Submit"
+                                    icon="pi pi-check"
+                                    type="submit"
+                                />
+                            </div>
+                        </form>
+                    )}
+                />
+            </Dialog>
         </div>
     );
 };

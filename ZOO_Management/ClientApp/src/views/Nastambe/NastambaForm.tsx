@@ -38,7 +38,6 @@ export const NastambaForm = () => {
         setLoading(true);
         try {
             const sektoriOptions = await getSektoriOptions();
-            console.log(sektoriOptions);
             setSektoriOptions(sektoriOptions);
         } catch (error) {
             dispatch(showToastMessage("Pogreška prilikom dohvaćanja sektora", "error"));

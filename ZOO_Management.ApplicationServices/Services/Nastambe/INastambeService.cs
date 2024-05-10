@@ -12,6 +12,12 @@ namespace ZOO_Management.ApplicationServices.Services.Nastambe
         Task<List<NastambeGetResponse>> GetNastambeAsync();
 
         /// <summary>
+        /// Vraca nastambu s odredenim id-jem
+        /// </summary>
+        /// <returns></returns>
+        Task<NastambeGetResponse> GetNastambaByIdAsync(int id);
+
+        /// <summary>
         /// Kreira novu nastambu
         /// </summary>
         /// <returns></returns>
