@@ -29,7 +29,6 @@ namespace ZOO_Management.ApplicationServices.Services.Nastambe
             }
             return response;
         }
-
         public async Task<NastambeGetResponse> GetNastambaByIdAsync(int id)
         {
             Nastamba nastamba = await _nastambeRepository.GetNastambaByIdAsync(id);

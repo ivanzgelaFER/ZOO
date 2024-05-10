@@ -77,12 +77,18 @@ namespace ZOO_Management
             {
                 endpoints.MapControllerRoute(name: "default", pattern: "{controller}/{action=Index}/{id?}");
             });
-
-            app.UseSpa(spa =>
+            try
             {
-                spa.Options.SourcePath = "ClientApp";
-                if (env.IsDevelopment()) spa.UseReactDevelopmentServer(npmScript: "start");
-            });
+                app.UseSpa(spa =>
+                {
+                    spa.Options.SourcePath = "ClientApp";
+                    if (env.IsDevelopment()) spa.UseReactDevelopmentServer(npmScript: "start");
+                });
+
+            }catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
         }
     }
 }

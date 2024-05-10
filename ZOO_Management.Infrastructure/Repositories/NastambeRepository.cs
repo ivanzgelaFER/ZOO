@@ -17,7 +17,6 @@ namespace ZOO_Management.Infrastructure.Repositories
         {
              return await _ctx.Nastamba.ToListAsync();
         }
-
         public async Task<Nastamba> GetNastambaByIdAsync(int id)
         {
             return await _ctx.Nastamba.FindAsync(id);

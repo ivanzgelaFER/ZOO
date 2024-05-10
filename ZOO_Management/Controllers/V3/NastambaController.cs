@@ -22,7 +22,7 @@ namespace ZOO_Management.Controllers.V3
             return Ok(await _nastambeService.GetNastambeAsync());
         }
 
-        [HttpGet("{id")]
+        [HttpGet("{id}")]
         public async Task<IActionResult> GetNastambeAsync([FromRoute] int id)
         {
             return Ok(await _nastambeService.GetNastambaByIdAsync(id));
