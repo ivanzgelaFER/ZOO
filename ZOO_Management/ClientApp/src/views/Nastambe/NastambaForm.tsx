@@ -82,6 +82,9 @@ export const NastambaForm = () => {
                                                 <InputNumber
                                                     id="velicina"
                                                     {...input}
+                                                    onChange={(value: any) => {
+                                                        input.onChange(value.value);
+                                                    }}
                                                 />
                                                 <label htmlFor="velicina">Veličina nastambe (m^2)</label>
                                             </span>
@@ -96,6 +99,9 @@ export const NastambaForm = () => {
                                                 <InputNumber
                                                     id="kapacitet"
                                                     {...input}
+                                                    onChange={(value: any) => {
+                                                        input.onChange(value.value);
+                                                    }}
                                                 />
                                                 <label htmlFor="kapacitet">Kapacitet (max broj životinja)</label>
                                             </span>

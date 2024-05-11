@@ -26,7 +26,13 @@ namespace ZOO_Management.Controllers.V3
         [HttpPut]
         public async Task<IActionResult> UpdateNastambaAsync([FromBody] ZivotinjaUpdateRequest request)
         {
-            return Ok(_zivotinjeService.UpdateZivotinjaAsync(request));
+            return Ok(await _zivotinjeService.UpdateZivotinjaAsync(request));
         }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteZivotinja([FromRoute] int id)
+        {
+            return Ok(await _zivotinjeService.DeleteZivotinjaAsync(id));
+        }   
     }
 }

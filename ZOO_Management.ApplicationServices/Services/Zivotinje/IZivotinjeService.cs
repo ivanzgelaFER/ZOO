@@ -17,5 +17,10 @@ namespace ZOO_Management.ApplicationServices.Services.Zivotinje
         /// </summary>
         /// <returns></returns>
         Task<int> UpdateZivotinjaAsync(ZivotinjaUpdateRequest request);
+
+        /// <summary>
+        /// Brise zivotinju s odredenim id-jem
+        /// </summary>
+        Task<int> DeleteZivotinjaAsync(int id);
     }
 }

@@ -13,4 +13,6 @@ export interface INastamba {
 export const nastambaInit: INastamba = {
     tip: "",
     naseljena: false,
+    velicina: 0,
+    kapacitet: 0,
 };

@@ -10,3 +10,8 @@ export const updateZivotinja = async (zivotinja: IZivotinja) => {
     const res = await axios.put(`/zivotinja`, zivotinja);
     return res.data;
 };
+
+export const deleteZivotinja = async (idZivotinja: number) => {
+    const res = await axios.delete(`/zivotinja/${idZivotinja}`);
+    return res.data;
+};

@@ -31,6 +31,8 @@ namespace ZOO_Management.ApplicationServices.Mappers
             return new Zivotinja
             {
                 IdZivotinja = request.IdZivotinja,
+                IdNastamba = request.IdNastamba,
+                IdVrsta = request.IdVrsta,
                 Starost = request.Starost,
                 Kilaza = request.Kilaza,
                 Ime = request.Ime

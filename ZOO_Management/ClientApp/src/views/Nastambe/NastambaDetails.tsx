@@ -17,10 +17,10 @@ import { InputNumber } from "primereact/inputnumber";
 import { Dropdown } from "primereact/dropdown";
 import { getSektoriOptions } from "../../api/sektori";
 import { SelectItem } from "primereact/selectitem";
-import { getNastambaById, updateNastamba } from "../../api/nastambe";
+import { deleteNastamba, getNastambaById, updateNastamba } from "../../api/nastambe";
 import { Dialog } from "primereact/dialog";
 import { IZivotinja } from "../../models/zivotinja";
-import { updateZivotinja } from "../../api/zivotinje";
+import { deleteZivotinja, updateZivotinja } from "../../api/zivotinje";
 
 interface ILocationState {
     nastamba: INastamba;
@@ -62,6 +62,8 @@ export const NastambaDetails = () => {
         try {
             const updatedZivotinjaId = await updateZivotinja(data);
             dispatch(showToastMessage(`Zivotinja s id: ${updatedZivotinjaId} uspjesno izmjenjena`, "success"));
+            var nastambaRes = await getNastambaById(nastamba.idNastamba ?? 0);
+            setNastamba(nastambaRes);
         } catch (error) {
             dispatch(showToastMessage("Greska prilikom izmjene nastambe", "error"));
         } finally {
@@ -80,13 +82,36 @@ export const NastambaDetails = () => {
         );
     };
 
-    const actionColumnDelete = (rowData: INastamba) => {
+    const handleDeleteNastamba = async (rowData: INastamba) => {
+        try {
+            const deletedId = await deleteNastamba(rowData.idNastamba!);
+            dispatch(showToastMessage("Uspješno brisanje nastambe s id: " + deletedId, "success"));
+        } catch (err) {
+            dispatch(showToastMessage("Pogreška tijekom brisanja nastambe.", "error"));
+        } finally {
+            navigate("/nastambe");
+        }
+    };
+
+    const handleDeleteZivotinja = async (rowData: IZivotinja) => {
+        try {
+            const deletedId = await deleteZivotinja(rowData.idZivotinja);
+            dispatch(showToastMessage("Uspješno brisanje zivotinja s id: " + deletedId, "success"));
+        } catch (err) {
+            dispatch(showToastMessage("Pogreška tijekom brisanja zivotinje.", "error"));
+        } finally {
+            var nastambaRes = await getNastambaById(nastamba.idNastamba ?? 0);
+            setNastamba(nastambaRes);
+        }
+    };
+
+    const actionColumnDeleteZivotinja = (rowData: IZivotinja) => {
         return (
             <Button
                 className="button-delete-nastamba"
                 icon="fa fa-trash"
                 onClick={() => {
-                    //handleDeleteNastamba(rowData);
+                    handleDeleteZivotinja(rowData);
                 }}
             />
         );
@@ -107,10 +132,9 @@ export const NastambaDetails = () => {
 
     const sektorOptionDisplay = (id: number) => {
         if (id === -1) return "Trenutno nema dodijeljen sektor";
-        sektoriOptions.forEach((sektor: SelectItem) => {
-            return sektor.value === id ? sektor.label : "";
-        });
+        return sektoriOptions.find(sektor => sektor.value === id)?.label ?? "Nepoznat sektor";
     };
+
     return (
         <div className="nastamba-details-container">
             <div>
@@ -128,6 +152,7 @@ export const NastambaDetails = () => {
                         <Button
                             label="Delete"
                             className="p-button-danger"
+                            onClick={() => handleDeleteNastamba(nastamba)}
                         />
                         <Button
                             label={editMode ? "Cancle" : "Edit"}
@@ -183,6 +208,9 @@ export const NastambaDetails = () => {
                                                                 "p-invalid": hasErrors,
                                                             })}
                                                             {...input}
+                                                            onChange={(value: any) => {
+                                                                input.onChange(value.value);
+                                                            }}
                                                         />
                                                     )}
                                                     displayRender={<span>{nastamba.velicina}</span>}
@@ -203,6 +231,9 @@ export const NastambaDetails = () => {
                                                                 "p-invalid": hasErrors,
                                                             })}
                                                             {...input}
+                                                            onChange={(value: any) => {
+                                                                input.onChange(value.value);
+                                                            }}
                                                         />
                                                     )}
                                                     displayRender={<span>{nastamba.kapacitet}</span>}
@@ -285,7 +316,6 @@ export const NastambaDetails = () => {
                     showGridlines
                     value={nastamba.zivotinje ?? []}
                     emptyMessage={"Trenutno nema zapisa."}
-                    onRowClick={rowData => {}}
                 >
                     {cols.map(col => {
                         return (
@@ -305,9 +335,9 @@ export const NastambaDetails = () => {
                     />
                     <Column
                         key={"Obriši"}
-                        field={"idNastamba"}
+                        field={"idZivotinja"}
                         header={"Obriši"}
-                        body={actionColumnDelete}
+                        body={actionColumnDeleteZivotinja}
                     />
                 </DataTable>
             </div>
@@ -351,6 +381,9 @@ export const NastambaDetails = () => {
                                             <InputNumber
                                                 id="kilaza"
                                                 {...input}
+                                                onChange={(value: any) => {
+                                                    input.onChange(value.value);
+                                                }}
                                             />
                                         </span>
                                     </div>
@@ -365,6 +398,9 @@ export const NastambaDetails = () => {
                                             <InputNumber
                                                 id="starost"
                                                 {...input}
+                                                onChange={(value: any) => {
+                                                    input.onChange(value.value);
+                                                }}
                                             />
                                         </span>
                                     </div>

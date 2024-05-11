@@ -26,5 +26,10 @@ namespace ZOO_Management.ApplicationServices.Services.Zivotinje
             Zivotinja zivotinja = ZivotinjeMapper.MapZivotinjaUpdateRequestToZivotinja(request);
             return await _zivotinjeRepository.UpdateZivotinjaAsync(zivotinja);
         }
+
+        public async Task<int> DeleteZivotinjaAsync(int id)
+        {
+            return await _zivotinjeRepository.DeleteZivotinjaAsync(id);
+        }
     }
 }

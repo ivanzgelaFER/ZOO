@@ -6,5 +6,6 @@ namespace ZOO_Management.DomainServices.Interfaces.Repositories
     {
         Task<List<Zivotinja>> GetByNastambaIdAsync(int nastambaId);
         Task<int> UpdateZivotinjaAsync(Zivotinja zivotinja);
+        Task<int> DeleteZivotinjaAsync(int id);
     }
 }

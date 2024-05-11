@@ -22,8 +22,15 @@ namespace ZOO_Management.Infrastructure.Repositories
         {
             _ctx.Zivotinja.Update(zivotinja);
             await _ctx.SaveChangesAsync();
-
             return zivotinja.IdZivotinja;
+        }
+
+        public async Task<int> DeleteZivotinjaAsync(int id)
+        {
+            Zivotinja zivotinja = await _ctx.Zivotinja.FindAsync(id);
+            _ctx.Zivotinja.Remove(zivotinja);
+            await _ctx.SaveChangesAsync();
+            return id;
         }
     }
 }
