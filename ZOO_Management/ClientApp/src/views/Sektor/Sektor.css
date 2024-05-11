@@ -1,0 +1,35 @@
+.button-delete-sektor {
+    background-color: red;
+}
+
+.sektor-details-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.back-action {
+    font-size: 20px;
+}
+
+.checkbox-sektor {
+    margin-left: 20px;
+}
+
+.sektor-add-new {
+    display: flex;
+    justify-content: space-between;
+}
+
+.sektor-add-new > button {
+    margin-right: 0px;
+    height: 3rem;
+}
+
+.sektor-form-back-action {
+    padding-top: 20px;
+}
+
+.zoo-container-header {
+    padding-bottom: 0px !important;
+}

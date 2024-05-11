@@ -34,6 +34,5 @@ namespace ZOO_Management.ApplicationServices.Services.Nastambe
         /// </summary>
         /// <returns></returns>
         Task<int> DeleteNastambaAsync(int id);
-
     }
 }
