@@ -1,4 +1,4 @@
-﻿namespace ZOO_Management.DomainModel.ResponseModels.Zivotinje
+﻿namespace ZOO_Management.DomainModel.RequestModels.Zivotinje
 {
     public class ZivotinjaUpdateRequest
     {

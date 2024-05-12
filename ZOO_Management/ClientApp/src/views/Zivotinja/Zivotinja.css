@@ -1,0 +1,35 @@
+.button-delete-nastamba {
+    background-color: red;
+}
+
+.zivotinja-details-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.back-action {
+    font-size: 20px;
+}
+
+.checkbox-zivotinja {
+    margin-left: 20px;
+}
+
+.zivotinja-add-new {
+    display: flex;
+    justify-content: space-between;
+}
+
+.zivotinja-add-new > button {
+    margin-right: 0px;
+    height: 3rem;
+}
+
+.zivotinja-form-back-action {
+    padding-top: 20px;
+}
+
+.zoo-container-header {
+    padding-bottom: 0px !important;
+}

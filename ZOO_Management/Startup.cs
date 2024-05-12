@@ -46,6 +46,7 @@ namespace ZOO_Management
             services.AddScoped<INastambeRepository, NastambeRepository>();
             services.AddScoped<IZivotinjeRepository, ZivotinjeRepository>();
             services.AddScoped<ISektoriRepository, SektoriRepository>();
+            services.AddScoped<IVrstaZivotinjeRepository, VrstaZivotinjeRepository>();
         }
 
         public virtual void Configure(IApplicationBuilder app, IWebHostEnvironment env)

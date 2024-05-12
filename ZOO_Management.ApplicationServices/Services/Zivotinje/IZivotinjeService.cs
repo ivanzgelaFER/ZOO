@@ -1,4 +1,5 @@
 ﻿using ZOO_Management.DomainModel.RequestModels.Nastambe;
+using ZOO_Management.DomainModel.RequestModels.Zivotinje;
 using ZOO_Management.DomainModel.ResponseModels.Nastambe;
 using ZOO_Management.DomainModel.ResponseModels.Zivotinje;
 
@@ -11,16 +12,10 @@ namespace ZOO_Management.ApplicationServices.Services.Zivotinje
         /// </summary>
         /// <returns></returns>
         Task<List<ZivotinjeGetByNastambaIdResponse>> GetByNastambaIdAsync(int nastambaId);
-
-        /// <summary>
-        /// Azurira postojecu zivotinju
-        /// </summary>
-        /// <returns></returns>
         Task<int> UpdateZivotinjaAsync(ZivotinjaUpdateRequest request);
-
-        /// <summary>
-        /// Brise zivotinju s odredenim id-jem
-        /// </summary>
         Task<int> DeleteZivotinjaAsync(int id);
+        Task<List<ZivotinjeGetResponse>> GetZivotinjeAsync();
+        Task<ZivotinjeGetResponse> GetZivotinjaByIdAsync(int id);
+        Task<int> CreateZivotinjaAsync(ZivotinjaCreateNewRequest request);
     }
 }

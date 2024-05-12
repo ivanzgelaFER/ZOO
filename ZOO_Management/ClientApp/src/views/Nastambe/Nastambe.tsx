@@ -14,7 +14,7 @@ import { getSektoriOptions } from "../../api/sektori";
 const cols = [
     { field: "idNastamba", header: "Identifikator", sortable: true },
     { field: "tip", header: "Tip nastambe", sortable: false },
-    { field: "velicina", header: "Valičina nastambe", sortable: true },
+    { field: "velicina", header: "Veličina nastambe", sortable: true },
     { field: "kapacitet", header: "Kapacitet nastambe", sortable: true },
 ];
 
