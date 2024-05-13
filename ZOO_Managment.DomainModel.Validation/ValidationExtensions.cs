@@ -1,6 +1,6 @@
 ﻿namespace ZOO_Managment.DomainModel.Validation;
 
-public class ValidationExtensions
+public static class ValidationExtensions
 {
     //TODO
 }

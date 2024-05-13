@@ -7,12 +7,12 @@ import { useAuth0 } from "@auth0/auth0-react";
 import { useCallback, useEffect } from "react";
 import { Nastambe } from "./views/Nastambe/Nastambe";
 import { Sektor } from "./views/Sektor/Sektor";
-import { Zivotinja } from "./views/Zivotinja/Zivotinja";
 import { VrstaZivotinje } from "./views/VrstaZivotinje/VrstaZivotinje";
 import { NastambaDetails } from "./views/Nastambe/NastambaDetails";
 import { NastambaForm } from "./views/Nastambe/NastambaForm";
 import { SektorDetails } from "./views/Sektor/SektorDetails";
 import { SektorForm } from "./views/Sektor/SektorForm";
+import {Zivotinje} from "./views/Zivotinja/Zivotinja";
 
 configureAxiosClient(axios);
 
@@ -65,7 +65,7 @@ export const App = () => {
             />
             <Route
                 path={"/zivotinja"}
-                element={<Zivotinja />}
+                element={<Zivotinje />}
             />
             <Route
                 path={"/vrstazivotinje"}
