@@ -22,7 +22,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ZOO_Managment.DomainModel.V
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{90E63AB7-4DB1-40AC-9C2F-4AAE3D31CB4C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZOO_Management.UnitTests", "..\ZOO_Management.UnitTests\ZOO_Management.UnitTests.csproj", "{07676D40-BCD2-43BD-A012-005751686F37}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ZOO_Management.UnitTests", "..\ZOO_Management.UnitTests\ZOO_Management.UnitTests.csproj", "{07676D40-BCD2-43BD-A012-005751686F37}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZOO_Management.IntegrationTest", "..\ZOO_Management.IntegrationTest\ZOO_Management.IntegrationTest.csproj", "{BC9B2E61-7D00-4BA6-BCDB-17BEE59B6B66}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -58,12 +60,17 @@ Global
 		{07676D40-BCD2-43BD-A012-005751686F37}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{07676D40-BCD2-43BD-A012-005751686F37}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{07676D40-BCD2-43BD-A012-005751686F37}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BC9B2E61-7D00-4BA6-BCDB-17BEE59B6B66}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BC9B2E61-7D00-4BA6-BCDB-17BEE59B6B66}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BC9B2E61-7D00-4BA6-BCDB-17BEE59B6B66}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BC9B2E61-7D00-4BA6-BCDB-17BEE59B6B66}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{07676D40-BCD2-43BD-A012-005751686F37} = {90E63AB7-4DB1-40AC-9C2F-4AAE3D31CB4C}
+		{BC9B2E61-7D00-4BA6-BCDB-17BEE59B6B66} = {90E63AB7-4DB1-40AC-9C2F-4AAE3D31CB4C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {7DFA505F-B807-4CEF-B9A7-B0738B841213}
