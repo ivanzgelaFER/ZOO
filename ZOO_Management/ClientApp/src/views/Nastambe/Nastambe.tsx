@@ -10,6 +10,8 @@ import { DataTable } from "primereact/datatable";
 import { useNavigate } from "react-router-dom";
 import { SelectItem } from "primereact/selectitem";
 import { getSektoriOptions } from "../../api/sektori";
+import { IZivotinja } from "../../models/zivotinja";
+import { getAllZivotinje } from "../../api/zivotinje";
 
 const cols = [
     { field: "idNastamba", header: "Identifikator", sortable: true },

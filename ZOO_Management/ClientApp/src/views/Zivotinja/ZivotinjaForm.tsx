@@ -10,12 +10,11 @@ import { ZooContainer } from "../../containers/ZooContainer/ZooContainer";
 import { INastamba, nastambaInit } from "../../models/nastambe";
 import { createNewNastamba } from "../../api/nastambe";
 import { Checkbox } from "primereact/checkbox";
-import { getSektoriOptions } from "../../api/sektori";
 import { Dropdown } from "primereact/dropdown";
 import { SelectItem } from "primereact/selectitem";
 import { InputNumber } from "primereact/inputnumber";
-import {IZivotinja} from "../../models/zivotinja";
-import {getVrsteZivotinjaOptions} from "../../api/vrsteZivotinja";
+import { IZivotinja } from "../../models/zivotinja";
+import { getVrsteZivotinjaOptions } from "../../api/vrsteZivotinja";
 
 export const ZivotinjaForm = () => {
     const dispatch = useDispatch();
@@ -69,7 +68,7 @@ export const ZivotinjaForm = () => {
                 <div className="add-form">
                     <Form
                         onSubmit={onSubmit}
-                        initialValues={zivotinjaInit}
+                        initialValues={}
                         render={({ handleSubmit }) => (
                             <form
                                 onSubmit={handleSubmit}
@@ -132,7 +131,6 @@ export const ZivotinjaForm = () => {
                                                 <Dropdown
                                                     id="idSektor"
                                                     {...input}
-                                                    options={sektoriOptions}
                                                     optionLabel="label"
                                                     optionValue="value"
                                                 />

@@ -21,18 +21,17 @@ import { deleteNastamba, getNastambaById, updateNastamba } from "../../api/nasta
 import { Dialog } from "primereact/dialog";
 import { IZivotinja } from "../../models/zivotinja";
 import { deleteZivotinja, updateZivotinja } from "../../api/zivotinje";
+import { getVrsteZivotinjaOptions } from "../../api/vrsteZivotinja";
 
 interface ILocationState {
     nastamba: INastamba;
 }
 
 const cols = [
+    { field: "idZivotinja", header: "Identifikator životinje", sortable: true },
     { field: "ime", header: "Ime", sortable: false },
     { field: "kilaza", header: "Kilaža", sortable: true },
     { field: "starost", header: "Starost (godine)", sortable: true },
-    { field: "idZivotinja", header: "Identifikator životinje", sortable: true },
-    { field: "idNastamba", header: "Identifikator nastambe", sortable: true },
-    { field: "idVrsta", header: "Vrsta", sortable: true },
 ];
 
 export const NastambaDetails = () => {
@@ -44,6 +43,7 @@ export const NastambaDetails = () => {
     const [dialogOpen, setDialogOpen] = useState(false);
     const dispatch = useDispatch();
     const [zivotinjaForEdit, setZivotinjaForEdit] = useState<IZivotinja>();
+    const [vrsteZivotinjaOptions, setVrsteZivotinjaOptions] = useState<SelectItem[]>([]);
 
     let resetForm = () => {};
 
@@ -129,6 +129,23 @@ export const NastambaDetails = () => {
     useEffect(() => {
         fetchSektoriOptions();
     }, [fetchSektoriOptions]);
+
+    const fetchVrsteOptions = useCallback(async () => {
+        try {
+            const vrste = await getVrsteZivotinjaOptions();
+            setVrsteZivotinjaOptions(vrste);
+        } catch (error) {
+            dispatch(showToastMessage("Pogreška prilikom dohvaćanja vrsta zivotinja", "error"));
+        }
+    }, [dispatch]);
+
+    useEffect(() => {
+        fetchSektoriOptions();
+    }, [fetchSektoriOptions]);
+
+    useEffect(() => {
+        fetchVrsteOptions();
+    }, [fetchVrsteOptions]);
 
     const sektorOptionDisplay = (id: number) => {
         if (id === -1) return "Trenutno nema dodijeljen sektor";
@@ -260,7 +277,6 @@ export const NastambaDetails = () => {
                                                 />
                                             </td>
                                         </tr>
-
                                         <tr>
                                             <th>Sektor</th>
                                             <td>
@@ -327,6 +343,14 @@ export const NastambaDetails = () => {
                             />
                         );
                     })}
+                    <Column
+                        key={"idVrsta"}
+                        field={"idVrsta"}
+                        header={"Vrsta zivotinje"}
+                        body={(rowData: IZivotinja) => {
+                            return vrsteZivotinjaOptions.find(x => x.value === rowData.idVrsta)?.label || "";
+                        }}
+                    />
                     <Column
                         key={"Uredi"}
                         field={"idZivotinja"}
@@ -401,6 +425,21 @@ export const NastambaDetails = () => {
                                                 onChange={(value: any) => {
                                                     input.onChange(value.value);
                                                 }}
+                                            />
+                                        </span>
+                                    </div>
+                                )}
+                            />
+                            <Field
+                                name="idVrsta"
+                                render={({ input }) => (
+                                    <div className="field">
+                                        <span>Vrsta</span>
+                                        <span className="p-float-label">
+                                            <Dropdown
+                                                id={"idVrsta"}
+                                                {...input}
+                                                options={vrsteZivotinjaOptions}
                                             />
                                         </span>
                                     </div>
