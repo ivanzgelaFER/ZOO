@@ -2,14 +2,15 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { showToastMessage } from "../../actions/toastMessageActions";
 import { useState } from "react";
-import { Field, Form } from "react-final-form";
+import { Field, FieldMetaState, Form } from "react-final-form";
 import { Button } from "primereact/button";
+import { InputText } from "primereact/inputtext";
 import "./Sektor.css";
 import { ZooContainer } from "../../containers/ZooContainer/ZooContainer";
 import { InputNumber } from "primereact/inputnumber";
-import { InputText } from "primereact/inputtext";
 import { ISektor, sektorInit } from "../../models/sektor";
 import { createNewSektor } from "../../api/sektori";
+import { classNames } from "primereact/utils";
 
 export const SektorForm = () => {
     const dispatch = useDispatch();
@@ -27,6 +28,37 @@ export const SektorForm = () => {
             setLoading(false);
             navigate("/sektor");
         }
+    };
+
+    const validate = (data: ISektor) => {
+        const errors: any = {};
+        const nazivRegex = /^(?=.*[a-zA-Z])(?=.*\d).+$/;
+
+        if (!data.naziv) {
+            errors.naziv = "Naziv mora biti unesen";
+        } else if (!nazivRegex.test(data.naziv)) {
+            errors.naziv = "Naziv mora sadržavati i slova i brojeve";
+        }
+
+        if (data.povrsina === undefined || data.povrsina <= 0) {
+            errors.povrsina = "Površina mora biti pozitivan broj";
+        }
+
+        return errors;
+    };
+
+    const isFormFieldValid = (meta: FieldMetaState<any>) => {
+        return meta.touched && meta.error;
+    };
+
+    const getFormErrorMessage = (meta: FieldMetaState<any>) => {
+        return (
+            isFormFieldValid(meta) && (
+                <div>
+                    <small className="p-error">{meta.error}</small>
+                </div>
+            )
+        );
     };
 
     return (
@@ -47,6 +79,7 @@ export const SektorForm = () => {
                     <Form
                         onSubmit={onSubmit}
                         initialValues={sektorInit}
+                        validate={validate}
                         render={({ handleSubmit }) => (
                             <form
                                 onSubmit={handleSubmit}
@@ -55,39 +88,60 @@ export const SektorForm = () => {
                             >
                                 <Field
                                     name="naziv"
-                                    type="text"
-                                    render={({ input }) => (
+                                    render={({ input, meta }) => (
                                         <div className="field">
                                             <span className="p-float-label">
                                                 <InputText
                                                     id="naziv"
                                                     {...input}
+                                                    className={classNames({
+                                                        "p-invalid": isFormFieldValid(meta),
+                                                    })}
                                                 />
-                                                <label htmlFor="naziv">Naziv sektora</label>
+                                                <label
+                                                    htmlFor="naziv"
+                                                    className={classNames({
+                                                        "p-error": isFormFieldValid(meta),
+                                                    })}
+                                                >
+                                                    Naziv sektora
+                                                </label>
                                             </span>
+                                            {getFormErrorMessage(meta)}
                                         </div>
                                     )}
                                 />
                                 <Field
                                     name="povrsina"
-                                    render={({ input }) => (
+                                    render={({ input, meta }) => (
                                         <div className="field">
                                             <span className="p-float-label">
                                                 <InputNumber
                                                     id="povrsina"
+                                                    className={classNames({
+                                                        "p-invalid": isFormFieldValid(meta),
+                                                    })}
                                                     {...input}
                                                     onChange={(value: any) => {
                                                         input.onChange(value.value);
                                                     }}
                                                 />
-                                                <label htmlFor="povrsina">Površina sektora</label>
+                                                <label
+                                                    htmlFor="povrsina"
+                                                    className={classNames({
+                                                        "p-error": isFormFieldValid(meta),
+                                                    })}
+                                                >
+                                                    Površina sektora
+                                                </label>
                                             </span>
+                                            {getFormErrorMessage(meta)}
                                         </div>
                                     )}
                                 />
                                 <Button
                                     type="submit"
-                                    label="Submit"
+                                    label="Dodaj novi sektor"
                                     loading={loading}
                                     disabled={loading}
                                 />

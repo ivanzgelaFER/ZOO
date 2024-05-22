@@ -2,7 +2,7 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { showToastMessage } from "../../actions/toastMessageActions";
 import { useCallback, useEffect, useState } from "react";
-import { Field, Form } from "react-final-form";
+import { Field, FieldMetaState, Form } from "react-final-form";
 import { Button } from "primereact/button";
 import { InputText } from "primereact/inputtext";
 import "./Nastambe.css";
@@ -14,6 +14,7 @@ import { getSektoriOptions } from "../../api/sektori";
 import { Dropdown } from "primereact/dropdown";
 import { SelectItem } from "primereact/selectitem";
 import { InputNumber } from "primereact/inputnumber";
+import { classNames } from "primereact/utils";
 
 export const NastambaForm = () => {
     const dispatch = useDispatch();
@@ -50,6 +51,27 @@ export const NastambaForm = () => {
         fetchSektoriOptions();
     }, [fetchSektoriOptions]);
 
+    const validate = (data: INastamba) => {
+        const errors: any = {};
+        if (!data.velicina) errors.velicina = "Veličina mora biti unesena";
+        if (data.kapacitet === undefined || data.kapacitet <= 0) errors.kapacitet = "Kapacitet mora biti pozitivan broj";
+        return errors;
+    };
+
+    const isFormFieldValid = (meta: FieldMetaState<any>) => {
+        return meta.touched && meta.error;
+    };
+
+    const getFormErrorMessage = (meta: FieldMetaState<any>) => {
+        return (
+            isFormFieldValid(meta) && (
+                <div>
+                    <small className="p-error">{meta.error}</small>
+                </div>
+            )
+        );
+    };
+
     return (
         <>
             <div>
@@ -68,6 +90,7 @@ export const NastambaForm = () => {
                     <Form
                         onSubmit={onSubmit}
                         initialValues={nastambaInit}
+                        validate={validate}
                         render={({ handleSubmit }) => (
                             <form
                                 onSubmit={handleSubmit}
@@ -76,7 +99,7 @@ export const NastambaForm = () => {
                             >
                                 <Field
                                     name="velicina"
-                                    render={({ input }) => (
+                                    render={({ input, meta }) => (
                                         <div className="field">
                                             <span className="p-float-label">
                                                 <InputNumber
@@ -85,26 +108,48 @@ export const NastambaForm = () => {
                                                     onChange={(value: any) => {
                                                         input.onChange(value.value);
                                                     }}
+                                                    className={classNames({
+                                                        "p-invalid": isFormFieldValid(meta),
+                                                    })}
                                                 />
-                                                <label htmlFor="velicina">Veličina nastambe (m^2)</label>
+                                                <label
+                                                    htmlFor="velicina"
+                                                    className={classNames({
+                                                        "p-error": isFormFieldValid(meta),
+                                                    })}
+                                                >
+                                                    Veličina nastambe (m^2)
+                                                </label>
                                             </span>
+                                            {getFormErrorMessage(meta)}
                                         </div>
                                     )}
                                 />
                                 <Field
                                     name="kapacitet"
-                                    render={({ input }) => (
+                                    render={({ input, meta }) => (
                                         <div className="field">
                                             <span className="p-float-label">
                                                 <InputNumber
                                                     id="kapacitet"
+                                                    className={classNames({
+                                                        "p-invalid": isFormFieldValid(meta),
+                                                    })}
                                                     {...input}
                                                     onChange={(value: any) => {
                                                         input.onChange(value.value);
                                                     }}
                                                 />
-                                                <label htmlFor="kapacitet">Kapacitet (max broj životinja)</label>
+                                                <label
+                                                    htmlFor="kapacitet"
+                                                    className={classNames({
+                                                        "p-error": isFormFieldValid(meta),
+                                                    })}
+                                                >
+                                                    Kapacitet (max broj životinja)
+                                                </label>
                                             </span>
+                                            {getFormErrorMessage(meta)}
                                         </div>
                                     )}
                                 />
@@ -162,7 +207,7 @@ export const NastambaForm = () => {
                                 />
                                 <Button
                                     type="submit"
-                                    label="Submit"
+                                    label="Dodaj novu nastambu"
                                     loading={loading}
                                     disabled={loading}
                                 />

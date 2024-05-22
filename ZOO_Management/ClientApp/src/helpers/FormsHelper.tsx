@@ -22,7 +22,13 @@ const isFormFieldValid = (meta: FieldMetaState<any>) => {
 };
 
 const getFormErrorMessage = (meta: FieldMetaState<any>) => {
-    return isFormFieldValid(meta) && <small className="p-error">{meta.error}</small>;
+    return (
+        isFormFieldValid(meta) && (
+            <div>
+                <small className="p-error">{meta.error}</small>
+            </div>
+        )
+    );
 };
 
 export const FieldOrDisplay = ({ editMode, name, fieldRender, displayRender, roles, editUserGuid, onChangeAdditional, ...props }: IFieldOrDisplayProps) => {

@@ -23,17 +23,18 @@ export const SektorDetails = () => {
     const [sektor, setSektor] = useState((location.state as ILocationState)?.sektor);
     const [editMode, setEditMode] = useState(false);
     const dispatch = useDispatch();
+    const [hasErrors, setHasErrors] = useState(false);
 
     let resetForm = () => {};
 
     const onSubmit = async (data: ISektor) => {
         try {
             const updatedSektorId = await updateSektor(data);
-            dispatch(showToastMessage(`Sektor s id: ${updatedSektorId} uspjesno izmjenjena`, "success"));
-            var sektorRes = await getSektorById(updatedSektorId);
+            dispatch(showToastMessage(`Sektor s id: ${updatedSektorId} uspješno izmijenjen`, "success"));
+            const sektorRes = await getSektorById(updatedSektorId);
             setSektor(sektorRes);
         } catch (error) {
-            dispatch(showToastMessage("Greska prilikom izmjene sektora", "error"));
+            dispatch(showToastMessage("Greška prilikom izmjene sektora", "error"));
         }
     };
 
@@ -46,6 +47,23 @@ export const SektorDetails = () => {
         } finally {
             navigate("/sektor");
         }
+    };
+
+    const validate = (data: ISektor) => {
+        const errors: any = {};
+        const nazivRegex = /^(?=.*[a-zA-Z])(?=.*\d).+$/;
+
+        if (!data.naziv) {
+            errors.naziv = "Naziv mora biti unesen";
+        } else if (!nazivRegex.test(data.naziv)) {
+            errors.naziv = "Naziv mora sadržavati i slova i brojeve";
+        }
+
+        if (data.povrsina === undefined || data.povrsina <= 0) {
+            errors.povrsina = "Površina mora biti pozitivan broj";
+        }
+        setHasErrors(Object.keys(errors).length > 0);
+        return errors;
     };
 
     return (
@@ -68,7 +86,8 @@ export const SektorDetails = () => {
                             onClick={() => handleDeleteSektor(sektor)}
                         />
                         <Button
-                            label={editMode ? "Cancle" : "Edit"}
+                            label={editMode ? "Cancel" : "Edit"}
+                            disabled={hasErrors}
                             onClick={() => {
                                 setEditMode(!editMode);
                                 resetForm();
@@ -83,6 +102,7 @@ export const SektorDetails = () => {
                             <Button
                                 label="Spremi promjene"
                                 className="p-button-success"
+                                disabled={hasErrors}
                                 onClick={() => {
                                     setEditMode(false);
                                     submitFormWithId("sektor-details-form");
@@ -96,6 +116,7 @@ export const SektorDetails = () => {
                 <Form
                     onSubmit={onSubmit}
                     initialValues={sektor}
+                    validate={validate}
                 >
                     {({ handleSubmit, form }) => {
                         resetForm = form.reset;

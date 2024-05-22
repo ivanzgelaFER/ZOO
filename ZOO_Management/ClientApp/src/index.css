@@ -384,3 +384,22 @@
 .p-input-icon-left.p-float-label > label {
     left: 2.5rem;
 }
+
+.p-autocomplete.p-invalid.p-component > .p-inputtext {
+    border-color: #f0a9a7;
+}
+.p-calendar.p-invalid.p-component > .p-inputtext {
+    border-color: #f0a9a7;
+}
+.p-cascadeselect.p-invalid.p-component {
+    border-color: #f0a9a7;
+}
+.p-checkbox.p-invalid > .p-checkbox-box {
+    border-color: #f0a9a7;
+}
+.p-chips.p-invalid.p-component > .p-inputtext {
+    border-color: #f0a9a7;
+}
+.p-dropdown.p-invalid.p-component {
+    border-color: #f0a9a7;
+}

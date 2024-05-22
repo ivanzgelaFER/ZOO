@@ -22,6 +22,7 @@ import { Dialog } from "primereact/dialog";
 import { IZivotinja } from "../../models/zivotinja";
 import { deleteZivotinja, updateZivotinja } from "../../api/zivotinje";
 import { getVrsteZivotinjaOptions } from "../../api/vrsteZivotinja";
+import { error } from "console";
 
 interface ILocationState {
     nastamba: INastamba;
@@ -44,6 +45,7 @@ export const NastambaDetails = () => {
     const dispatch = useDispatch();
     const [zivotinjaForEdit, setZivotinjaForEdit] = useState<IZivotinja>();
     const [vrsteZivotinjaOptions, setVrsteZivotinjaOptions] = useState<SelectItem[]>([]);
+    const [hasErrors, setHasErrors] = useState(false);
 
     let resetForm = () => {};
 
@@ -152,6 +154,14 @@ export const NastambaDetails = () => {
         return sektoriOptions.find(sektor => sektor.value === id)?.label ?? "Nepoznat sektor";
     };
 
+    const validate = (data: INastamba) => {
+        const errors: any = {};
+        if (!data.velicina) errors.velicina = "Veličina mora biti unesena";
+        if (data.kapacitet === undefined || data.kapacitet <= 0) errors.kapacitet = "Kapacitet mora biti pozitivan broj";
+        setHasErrors(Object.keys(errors).length > 0);
+        return errors;
+    };
+
     return (
         <div className="nastamba-details-container">
             <div>
@@ -177,6 +187,7 @@ export const NastambaDetails = () => {
                                 setEditMode(!editMode);
                                 resetForm();
                             }}
+                            disabled={hasErrors}
                             className={classNames({
                                 "p-button-secondary": editMode,
                             })}
@@ -187,6 +198,7 @@ export const NastambaDetails = () => {
                             <Button
                                 label="Spremi promjene"
                                 className="p-button-success"
+                                disabled={hasErrors}
                                 onClick={() => {
                                     setEditMode(false);
                                     submitFormWithId("nastamba-details-form");
@@ -200,6 +212,7 @@ export const NastambaDetails = () => {
                 <Form
                     onSubmit={onSubmit}
                     initialValues={nastamba}
+                    validate={validate}
                 >
                     {({ handleSubmit, form }) => {
                         resetForm = form.reset;
@@ -453,7 +466,7 @@ export const NastambaDetails = () => {
                                     type="button"
                                 />
                                 <Button
-                                    label="Submit"
+                                    label="Uredi životinju"
                                     icon="pi pi-check"
                                     type="submit"
                                 />
