@@ -93,3 +93,11 @@ table.dataview tr td p {
 .form-container .field .p-dropdown {
     width: 100%;
 }
+
+table.dataview td input {
+    width: 300px;
+}
+
+.p-dropdown {
+    width: 300px;
+}
