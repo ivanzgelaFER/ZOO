@@ -1,24 +1,15 @@
-import "./Nastambe.css";
 import { useCallback, useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { INastamba } from "../../models/nastambe";
 import { Field, Form } from "react-final-form";
 import { useDispatch } from "react-redux";
 import { showToastMessage } from "../../actions/toastMessageActions";
 import { FieldOrDisplay, submitFormWithId } from "../../helpers/FormsHelper";
-import { InputText } from "primereact/inputtext";
 import { classNames } from "primereact/utils";
 import { ZooContainer } from "../../containers/ZooContainer/ZooContainer";
 import { Button } from "primereact/button";
-import { DataTable } from "primereact/datatable";
-import { Column } from "primereact/column";
-import { InputSwitch } from "primereact/inputswitch";
 import { InputNumber } from "primereact/inputnumber";
 import { Dropdown } from "primereact/dropdown";
-import { getSektoriOptions } from "../../api/sektori";
 import { SelectItem } from "primereact/selectitem";
-import { deleteNastamba, getNastambaById, updateNastamba } from "../../api/nastambe";
-import { Dialog } from "primereact/dialog";
 import { IZivotinja } from "../../models/zivotinja";
 import {deleteZivotinja, getZivotinjaById, updateZivotinja} from "../../api/zivotinje";
 import {getVrsteZivotinjaOptions} from "../../api/vrsteZivotinja";
@@ -85,7 +76,7 @@ export const ZivotinjaDetails = () => {
 
     const handleDeleteZivotinja = async (rowData: IZivotinja) => {
         try {
-            const deletedId = await deleteNastamba(rowData.idNastamba!);
+            const deletedId = await deleteZivotinja(rowData.idZivotinja!);
             dispatch(showToastMessage("Uspješno brisanje zivotinje s id: " + deletedId, "success"));
         } catch (err) {
             dispatch(showToastMessage("Pogreška tijekom brisanja zivotinje.", "error"));
@@ -97,7 +88,7 @@ export const ZivotinjaDetails = () => {
     const actionColumnDeleteZivotinja = (rowData: IZivotinja) => {
         return (
             <Button
-                className="button-delete-nastamba"
+                className="button-delete-zivotinja"
                 icon="fa fa-trash"
                 onClick={() => {
                     handleDeleteZivotinja(rowData);
@@ -129,7 +120,7 @@ export const ZivotinjaDetails = () => {
             <div>
                 <i
                     className={"fa fa-backward show-cursor back-action"}
-                    onClick={() => navigate("/zivotinje")}
+                    onClick={() => navigate("/zivotinja")}
                 >
                     {"   "}N a t r a g
                 </i>
@@ -179,18 +170,18 @@ export const ZivotinjaDetails = () => {
                             <form
                                 onSubmit={handleSubmit}
                                 autoComplete="off"
-                                id="nastamba-details-form"
+                                id="zivotinja-details-form"
                             >
                                 <table className="dataview">
                                     <tbody>
                                     <tr>
                                         <th>
-                                            <strong>Veličina nastambe</strong>
+                                            <strong>Ime životinje</strong>
                                         </th>
                                         <td>
                                             <FieldOrDisplay
                                                 editMode={editMode}
-                                                name="velicina"
+                                                name="ime"
                                                 fieldRender={(input, hasErrors) => (
                                                     <InputNumber
                                                         className={classNames({
@@ -202,18 +193,18 @@ export const ZivotinjaDetails = () => {
                                                         }}
                                                     />
                                                 )}
-                                                displayRender={<span>{nastamba.velicina}</span>}
+                                                displayRender={<span>{zivotinja?.ime}</span>}
                                             />
                                         </td>
                                     </tr>
                                     <tr>
                                         <th>
-                                            <strong>Kapacitet nastambe</strong>
+                                            <strong>Starost životinje</strong>
                                         </th>
                                         <td>
                                             <FieldOrDisplay
                                                 editMode={editMode}
-                                                name="kapacitet"
+                                                name="starost"
                                                 fieldRender={(input, hasErrors) => (
                                                     <InputNumber
                                                         className={classNames({
@@ -225,69 +216,72 @@ export const ZivotinjaDetails = () => {
                                                         }}
                                                     />
                                                 )}
-                                                displayRender={<span>{nastamba.kapacitet}</span>}
+                                                displayRender={<span>{zivotinja?.starost}</span>}
                                             />
                                         </td>
                                     </tr>
                                     <tr>
                                         <th>
-                                            <strong>Tip nastambe</strong>
+                                            <strong>Kilaža životinje</strong>
                                         </th>
                                         <td>
                                             <FieldOrDisplay
                                                 editMode={editMode}
-                                                name="tip"
+                                                name="kilaza"
                                                 fieldRender={(input, hasErrors) => (
-                                                    <InputText
+                                                    <InputNumber
                                                         className={classNames({
                                                             "p-invalid": hasErrors,
                                                         })}
                                                         {...input}
+                                                        onChange={(value: any) => {
+                                                            input.onChange(value.value);
+                                                        }}
                                                     />
                                                 )}
-                                                displayRender={<span>{nastamba.tip}</span>}
+                                                displayRender={<span>{zivotinja?.kilaza}</span>}
                                             />
                                         </td>
                                     </tr>
 
                                     <tr>
-                                        <th>Sektor</th>
+                                        <th>Vrsta životinje</th>
                                         <td>
                                             <FieldOrDisplay
                                                 editMode={editMode}
-                                                name={"idSektor"}
+                                                name={"idVrsta"}
                                                 fieldRender={input => (
                                                     <Dropdown
-                                                        id={"idSektor"}
+                                                        id={"idVrsta"}
                                                         {...input}
-                                                        options={sektoriOptions}
+                                                        options={vrsteZivotinjaOptions}
                                                     />
                                                 )}
-                                                displayRender={sektorOptionDisplay(nastamba.idSektor ?? -1)}
+                                                displayRender={vrsteZivotinjaOptionDisplay(zivotinja?.idVrsta ?? -1)}
                                             />
                                         </td>
                                     </tr>
+
                                     <tr>
                                         <th>
-                                            <strong>Nastamba naseljena</strong>
+                                            <strong>ID Nastambe</strong>
                                         </th>
                                         <td>
                                             <FieldOrDisplay
                                                 editMode={editMode}
-                                                name="naseljena"
-                                                type="checkbox"
-                                                fieldRender={input => (
-                                                    <InputSwitch
+                                                name="idNastamba"
+                                                fieldRender={(input, hasErrors) => (
+                                                    <InputNumber
+                                                        className={classNames({
+                                                            "p-invalid": hasErrors,
+                                                        })}
                                                         {...input}
-                                                        checked={input.checked ?? false}
+                                                        onChange={(value: any) => {
+                                                            input.onChange(value.value);
+                                                        }}
                                                     />
                                                 )}
-                                                displayRender={
-                                                    <InputSwitch
-                                                        disabled
-                                                        checked={nastamba.naseljena ?? false}
-                                                    />
-                                                }
+                                                displayRender={<span>{zivotinja?.idNastamba}</span>}
                                             />
                                         </td>
                                     </tr>

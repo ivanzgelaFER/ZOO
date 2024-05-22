@@ -1,4 +1,5 @@
 ﻿using ZOO_Management.DomainModel.RequestModels.Nastambe;
+using ZOO_Management.DomainModel.ResponseModels;
 using ZOO_Management.DomainModel.ResponseModels.Nastambe;
 
 namespace ZOO_Management.ApplicationServices.Services.Nastambe
@@ -34,5 +35,7 @@ namespace ZOO_Management.ApplicationServices.Services.Nastambe
         /// </summary>
         /// <returns></returns>
         Task<int> DeleteNastambaAsync(int id);
+        
+        Task<List<DropdownItemsListResponse>> GetNastambeOptions();
     }
 }

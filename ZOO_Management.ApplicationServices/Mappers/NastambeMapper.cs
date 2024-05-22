@@ -1,6 +1,7 @@
 ﻿using Org.BouncyCastle.Asn1.Crmf;
 using ZOO_Management.DomainModel.Models;
 using ZOO_Management.DomainModel.RequestModels.Nastambe;
+using ZOO_Management.DomainModel.ResponseModels;
 using ZOO_Management.DomainModel.ResponseModels.Nastambe;
 
 namespace ZOO_Management.ApplicationServices.Mappers
@@ -29,7 +30,8 @@ namespace ZOO_Management.ApplicationServices.Mappers
 
         public static Nastamba MapNastambaCreateNewRequestToNastamba(NastambaCreateNewRequest request)
         {
-            return new Nastamba {
+            return new Nastamba
+            {
                 Velicina = request.Velicina,
                 Kapacitet = request.Kapacitet,
                 Tip = request.Tip,
@@ -62,6 +64,22 @@ namespace ZOO_Management.ApplicationServices.Mappers
                 Tip = nastamba.Tip,
                 IdSektor = nastamba.IdSektor,
             };
+        }
+
+        public static List<DropdownItemsListResponse> MapNastambeToDropdownItemsListResponse(List<Nastamba> nastambe)
+        {
+            List<DropdownItemsListResponse> response = new List<DropdownItemsListResponse>();
+
+            foreach (var n in nastambe)
+            {
+                response.Add(new DropdownItemsListResponse()
+                {
+                    Label = n.Tip,
+                    Value = n.IdNastamba
+                });
+            }
+
+            return response;
         }
     }
 }

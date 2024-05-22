@@ -45,5 +45,11 @@ namespace ZOO_Management.Controllers.V3
         {
             return Ok(await _nastambeService.DeleteNastambaAsync(id));
         }
+        
+        [HttpGet("options")]
+        public async Task<IActionResult> getNastambeOptions()
+        {
+            return Ok(await _nastambeService.GetNastambeOptions());
+        }
     }
 }

@@ -5,27 +5,25 @@ import { useCallback, useEffect, useState } from "react";
 import { Field, Form } from "react-final-form";
 import { Button } from "primereact/button";
 import { InputText } from "primereact/inputtext";
-import "./Nastambe.css";
 import { ZooContainer } from "../../containers/ZooContainer/ZooContainer";
-import { INastamba, nastambaInit } from "../../models/nastambe";
-import { createNewNastamba } from "../../api/nastambe";
-import { Checkbox } from "primereact/checkbox";
 import { Dropdown } from "primereact/dropdown";
 import { SelectItem } from "primereact/selectitem";
 import { InputNumber } from "primereact/inputnumber";
-import { IZivotinja } from "../../models/zivotinja";
+import {IZivotinja, zivotinjaInit} from "../../models/zivotinja";
 import { getVrsteZivotinjaOptions } from "../../api/vrsteZivotinja";
+import {createNewZivotinja} from "../../api/zivotinje";
+import {getNastambeOptions} from "../../api/nastambe";
 
 export const ZivotinjaForm = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const [loading, setLoading] = useState(false);
     const [vrsteZivotinjaOptions, setVrsteZivotinjaOptions] = useState<SelectItem[]>([]);
-
+    const [nastambeOptions, setNastambeOptions] = useState<SelectItem[]>([]);
     const onSubmit = async (data: IZivotinja) => {
         setLoading(true);
         try {
-            await createNewNastamba(data);
+            await createNewZivotinja(data);
             dispatch(showToastMessage("Uspješno dodana nova zivotinja", "success"));
         } catch (error) {
             dispatch(showToastMessage("Pogreška prilikom dodavanja nove zivotinje", "error"));
@@ -51,12 +49,29 @@ export const ZivotinjaForm = () => {
         fetchVrsteZivotinjaOptions();
     }, [fetchVrsteZivotinjaOptions]);
 
+    const fetchNastambeOptions = useCallback(
+        async () => {
+            setLoading(true);
+            try {
+                 const nastambeOptions = await getNastambeOptions();
+                 setNastambeOptions(nastambeOptions);
+            } catch (error) {
+                dispatch(showToastMessage("Pogreška prilikom dohvaćanja nastambi", "error"));
+            } finally {
+                setLoading(false);
+            }
+        }, [dispatch]);
+
+    useEffect(() => {
+        fetchNastambeOptions();
+    }, [fetchNastambeOptions]);
+
     return (
         <>
             <div>
                 <i
                     className={"fa fa-backward show-cursor back-action zivotinja-form-back-action"}
-                    onClick={() => navigate("/zivotinje")}
+                    onClick={() => navigate("/zivotinja")}
                 >
                     {"   "} N a t r a g
                 </i>
@@ -68,7 +83,7 @@ export const ZivotinjaForm = () => {
                 <div className="add-form">
                     <Form
                         onSubmit={onSubmit}
-                        initialValues={}
+                        initialValues={zivotinjaInit}
                         render={({ handleSubmit }) => (
                             <form
                                 onSubmit={handleSubmit}
@@ -76,86 +91,83 @@ export const ZivotinjaForm = () => {
                                 autoComplete="off"
                             >
                                 <Field
-                                    name="velicina"
-                                    render={({ input }) => (
-                                        <div className="field">
-                                            <span className="p-float-label">
-                                                <InputNumber
-                                                    id="velicina"
-                                                    {...input}
-                                                    onChange={(value: any) => {
-                                                        input.onChange(value.value);
-                                                    }}
-                                                />
-                                                <label htmlFor="velicina">Veličina nastambe (m^2)</label>
-                                            </span>
-                                        </div>
-                                    )}
-                                />
-                                <Field
-                                    name="kapacitet"
-                                    render={({ input }) => (
-                                        <div className="field">
-                                            <span className="p-float-label">
-                                                <InputNumber
-                                                    id="kapacitet"
-                                                    {...input}
-                                                    onChange={(value: any) => {
-                                                        input.onChange(value.value);
-                                                    }}
-                                                />
-                                                <label htmlFor="kapacitet">Kapacitet (max broj životinja)</label>
-                                            </span>
-                                        </div>
-                                    )}
-                                />
-                                <Field
-                                    name="tip"
+                                    name="ime"
                                     render={({ input }) => (
                                         <div className="field">
                                             <span className="p-float-label">
                                                 <InputText
-                                                    id="tip"
+                                                    id="ime"
                                                     {...input}
                                                 />
-                                                <label htmlFor="tip">Tip nastambe</label>
+                                                <label htmlFor="ime">Ime životinje</label>
                                             </span>
                                         </div>
                                     )}
                                 />
                                 <Field
-                                    name="idSektor"
+                                    name="kilaza"
+                                    render={({ input }) => (
+                                        <div className="field">
+                                            <span className="p-float-label">
+                                                <InputNumber
+                                                    id="kilaza"
+                                                    {...input}
+                                                    onChange={(value: any) => {
+                                                        input.onChange(value.value);
+                                                    }}
+                                                />
+                                                <label htmlFor="kilaza">Kilaža</label>
+                                            </span>
+                                        </div>
+                                    )}
+                                />
+                                <Field
+                                    name="starost"
+                                    render={({ input }) => (
+                                        <div className="field">
+                                            <span className="p-float-label">
+                                                <InputNumber
+                                                    id="starost"
+                                                    {...input}
+                                                    onChange={(value: any) => {
+                                                        input.onChange(value.value);
+                                                    }}
+                                                />
+                                                <label htmlFor="starost">Starost</label>
+                                            </span>
+                                        </div>
+                                    )}
+                                />
+                                <Field
+                                    name="idVrsta"
                                     render={({ input }) => (
                                         <div className="field">
                                             <span className="p-float-label">
                                                 <Dropdown
-                                                    id="idSektor"
+                                                    id="idVrsta"
                                                     {...input}
+                                                    options={vrsteZivotinjaOptions}
                                                     optionLabel="label"
                                                     optionValue="value"
                                                 />
-                                                <label>Sektor</label>
+                                                <label>Vrsta</label>
                                             </span>
                                         </div>
                                     )}
                                 />
                                 <Field
-                                    name="naseljena"
-                                    type="checkbox"
+                                    name="idNastamba"
                                     render={({ input }) => (
                                         <div className="field">
                                             <span className="p-float-label">
-                                                <Checkbox
+                                                <Dropdown
+                                                    id="idNastamba"
                                                     {...input}
-                                                    checked={input.checked ?? false}
-                                                    id="naseljena"
+                                                    options={nastambeOptions}
+                                                    optionLabel="label"
+                                                    optionValue="value"
                                                 />
-                                                <label
-                                                    className="checkbox-nastambe"
-                                                    htmlFor="naseljena"
-                                                >
-                                                    Naseljena
-                                                </label>
+                                                <label>Nastamba</label>
                                             </span>
                                         </div>
                                     )}

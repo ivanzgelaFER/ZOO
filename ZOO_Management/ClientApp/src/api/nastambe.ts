@@ -25,3 +25,8 @@ export const deleteNastamba = async (id: number) => {
     const res = await axios.delete(`/nastamba/${id}`);
     return res.data;
 };
+
+export const getNastambeOptions = async () => {
+    const res = await axios.get("/nastamba/options");
+    return res.data;
+}

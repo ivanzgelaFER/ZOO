@@ -13,6 +13,8 @@ import { NastambaForm } from "./views/Nastambe/NastambaForm";
 import { SektorDetails } from "./views/Sektor/SektorDetails";
 import { SektorForm } from "./views/Sektor/SektorForm";
 import {Zivotinje} from "./views/Zivotinja/Zivotinja";
+import {ZivotinjaDetails} from "./views/Zivotinja/ZivotinjaDetails";
+import {ZivotinjaForm} from "./views/Zivotinja/ZivotinjaForm";
 
 configureAxiosClient(axios);
 
@@ -66,6 +68,15 @@ export const App = () => {
             <Route
                 path={"/zivotinja"}
                 element={<Zivotinje />}
+            />
+            <Route
+                path="/zivotinja-details"
+                element={<ZivotinjaDetails />}
+            />
+
+            <Route
+                path={"/zivotinja-add"}
+                element={<ZivotinjaForm />}
             />
             <Route
                 path={"/vrstazivotinje"}

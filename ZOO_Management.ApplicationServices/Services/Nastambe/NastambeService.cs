@@ -2,6 +2,7 @@
 using ZOO_Management.ApplicationServices.Mappers;
 using ZOO_Management.DomainModel.Models;
 using ZOO_Management.DomainModel.RequestModels.Nastambe;
+using ZOO_Management.DomainModel.ResponseModels;
 using ZOO_Management.DomainModel.ResponseModels.Nastambe;
 using ZOO_Management.DomainServices.Interfaces.Repositories;
 
@@ -55,5 +56,12 @@ namespace ZOO_Management.ApplicationServices.Services.Nastambe
             return await _nastambeRepository.DeleteNastambaAsync(id);
         }
 
+
+        public async Task<List<DropdownItemsListResponse>> GetNastambeOptions()
+        {
+            List<Nastamba> nastambe = await _nastambeRepository.GetNastambeAsync();
+            List<DropdownItemsListResponse> response = NastambeMapper.MapNastambeToDropdownItemsListResponse(nastambe);
+            return response;
+        }
     }
 }
