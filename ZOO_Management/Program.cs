@@ -1,7 +1,4 @@
 
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Identity;
-
 namespace ZOO_Management
 {
     public class Program
