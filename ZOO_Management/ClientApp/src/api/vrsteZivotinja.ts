@@ -16,8 +16,8 @@ export const updateVrstaZivotinje = async (vrstaZivotinje: IVrstaZivotinje) => {
     return res.data;
 }
 
-export const deleteVrstaZivotinje = async (idVrstaZivotinje: number) => {
-    const res = await axios.delete(`/vrstaZivotinje/${idVrstaZivotinje}`);
+export const deleteVrstaZivotinje = async (idVrsta: number) => {
+    const res = await axios.delete(`/vrstaZivotinje/${idVrsta}`);
     return res.data;
 }
 
@@ -26,7 +26,7 @@ export const createNewVrstaZivotinje = async (newVrstaZivotinje: IVrstaZivotinje
     return res.data;
 }
 
-export const getVrstaZivotinjeById = async (idVrstaZivotinje: number) => {
-    const res = await axios.get(`/vrstaZivotinje/${idVrstaZivotinje}`);
+export const getVrstaZivotinjeById = async (idVrsta: number) => {
+    const res = await axios.get(`/vrstaZivotinje/${idVrsta}`);
     return res.data;
 }

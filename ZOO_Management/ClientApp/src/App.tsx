@@ -15,6 +15,8 @@ import { SektorForm } from "./views/Sektor/SektorForm";
 import {Zivotinje} from "./views/Zivotinja/Zivotinja";
 import {ZivotinjaDetails} from "./views/Zivotinja/ZivotinjaDetails";
 import {ZivotinjaForm} from "./views/Zivotinja/ZivotinjaForm";
+import {VrstaZivotinjeDetails} from "./views/VrstaZivotinje/VrstaZivotinjeDetails";
+import {VrstaZivotinjeForm} from "./views/VrstaZivotinje/VrstaZivotinjeForm";
 
 configureAxiosClient(axios);
 
@@ -82,6 +84,15 @@ export const App = () => {
                 path={"/vrstazivotinje"}
                 element={<VrstaZivotinje />}
             />
+            <Route
+                path={"/vrstazivotinje-add"}
+                element={<VrstaZivotinjeForm/>}
+            />
+            <Route
+                path={"/vrstazivotinje-details"}
+                element={<VrstaZivotinjeDetails />}
+            />
+
         </Routes>
     );
 };
