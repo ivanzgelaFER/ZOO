@@ -1,4 +1,4 @@
-import { useState } from "react";
+import {useEffect, useState} from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Form } from "react-final-form";
 import { useDispatch } from "react-redux";
@@ -28,6 +28,21 @@ export const VrstaZivotinjeDetails = () => {
     const [editMode, setEditMode] = useState(false);
     const dispatch = useDispatch();
     const [hasErrors, setHasErrors] = useState(false);
+    const [boje, setBoje] = useState<string[]>([]);
+
+    useEffect(() => {
+        const fetchBoje = async () => {
+            try {
+                const nazivi = await getBojeVrstiZivotinja();
+                setBoje(nazivi);
+            } catch (error) {
+                console.error("Error fetching colors:", error);
+            }
+        };
+
+        fetchBoje();
+    }, []);
+
 
     console.log("Location state:", location.state);
 
@@ -61,7 +76,6 @@ export const VrstaZivotinjeDetails = () => {
         if (!data.boja) {
             errors.boja = "Boja mora biti unesena";
         } else if (data.boja) {
-            const boje = await getBojeVrstiZivotinja();
             if (boje.includes(data.boja)) {
                 errors.boja = "Već postoji vrsta zivotinje s tom bojom";
             }

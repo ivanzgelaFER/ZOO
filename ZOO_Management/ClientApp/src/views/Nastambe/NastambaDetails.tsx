@@ -17,7 +17,7 @@ import { InputNumber } from "primereact/inputnumber";
 import { Dropdown } from "primereact/dropdown";
 import { getSektoriOptions } from "../../api/sektori";
 import { SelectItem } from "primereact/selectitem";
-import { deleteNastamba, getNastambaById, updateNastamba } from "../../api/nastambe";
+import {deleteNastamba, getNastambaById, getNastambeTipovi, updateNastamba} from "../../api/nastambe";
 import { Dialog } from "primereact/dialog";
 import { IZivotinja } from "../../models/zivotinja";
 import { deleteZivotinja, updateZivotinja } from "../../api/zivotinje";
@@ -46,6 +46,21 @@ export const NastambaDetails = () => {
     const [zivotinjaForEdit, setZivotinjaForEdit] = useState<IZivotinja>();
     const [vrsteZivotinjaOptions, setVrsteZivotinjaOptions] = useState<SelectItem[]>([]);
     const [hasErrors, setHasErrors] = useState(false);
+    const [tipovi, setTipovi] = useState<string[]>([]);
+
+    useEffect(() => {
+        const fetchTipovi = async () => {
+            try {
+                const tipovi = await getNastambeTipovi();
+                setTipovi(tipovi);
+            } catch (error) {
+                console.error("Error fetching types:", error);
+            }
+        };
+
+        fetchTipovi();
+    }, []);
+
 
     let resetForm = () => {};
 
@@ -154,11 +169,15 @@ export const NastambaDetails = () => {
         return sektoriOptions.find(sektor => sektor.value === id)?.label ?? "Nepoznat sektor";
     };
 
-    const validate = (data: INastamba) => {
+    const validate = async (data: INastamba) => {
         const errors: any = {};
         if (!data.velicina) errors.velicina = "Veličina mora biti unesena";
         if (data.kapacitet === undefined || data.kapacitet <= 0) errors.kapacitet = "Kapacitet mora biti pozitivan broj";
-        setHasErrors(Object.keys(errors).length > 0);
+        if (data.tip) {
+            if (tipovi.includes(data.tip)){
+                errors.tip = "Navedeni tip postoji!";
+            }
+        }
         return errors;
     };
 

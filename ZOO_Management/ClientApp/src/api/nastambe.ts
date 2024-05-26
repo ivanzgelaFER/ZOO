@@ -30,3 +30,8 @@ export const getNastambeOptions = async () => {
     const res = await axios.get("/nastamba/options");
     return res.data;
 }
+
+export const getNastambeTipovi = async () => {
+    const res = await axios.get("/nastamba/tipovi");
+    return res.data;
+}

@@ -31,3 +31,8 @@ export const updateSektor = async (sektor: ISektor) => {
     const res = await axios.put("/sektor", sektor);
     return res.data;
 };
+
+export const getSektorNazivi = async () => {
+    const res = await axios.get("/sektor/nazivi");
+    return res.data as string[];
+}

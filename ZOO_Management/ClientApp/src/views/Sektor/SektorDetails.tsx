@@ -1,5 +1,5 @@
 import "./Sektor.css";
-import { useState } from "react";
+import {useEffect, useState} from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Form } from "react-final-form";
 import { useDispatch } from "react-redux";
@@ -9,7 +9,7 @@ import { classNames } from "primereact/utils";
 import { ZooContainer } from "../../containers/ZooContainer/ZooContainer";
 import { Button } from "primereact/button";
 import { InputNumber } from "primereact/inputnumber";
-import { deleteSektor, getSektorById, updateSektor } from "../../api/sektori";
+import {deleteSektor, getSektorById, getSektorNazivi, updateSektor} from "../../api/sektori";
 import { ISektor } from "../../models/sektor";
 import { InputText } from "primereact/inputtext";
 
@@ -24,6 +24,20 @@ export const SektorDetails = () => {
     const [editMode, setEditMode] = useState(false);
     const dispatch = useDispatch();
     const [hasErrors, setHasErrors] = useState(false);
+    const [naziviSektora, setNaziviSektora] = useState<string[]>([]);
+
+    useEffect(() => {
+        const fetchSektorNazivi = async () => {
+            try {
+                const nazivi = await getSektorNazivi();
+                setNaziviSektora(nazivi);
+            } catch (error) {
+                console.error("Error fetching sector names:", error);
+            }
+        };
+
+        fetchSektorNazivi();
+    }, []);
 
     let resetForm = () => {};
 
@@ -49,7 +63,7 @@ export const SektorDetails = () => {
         }
     };
 
-    const validate = (data: ISektor) => {
+    const validate = async (data: ISektor) => {
         const errors: any = {};
         const nazivRegex = /^(?=.*[a-zA-Z])(?=.*\d).+$/;
 
@@ -57,15 +71,18 @@ export const SektorDetails = () => {
             errors.naziv = "Naziv mora biti unesen";
         } else if (!nazivRegex.test(data.naziv)) {
             errors.naziv = "Naziv mora sadržavati i slova i brojeve";
+        } else if (data.naziv){
+            if (naziviSektora.includes(data.naziv)) {
+                errors.naziv = "Naziv već postoji";
+            }
         }
 
         if (data.povrsina === undefined || data.povrsina <= 0) {
             errors.povrsina = "Površina mora biti pozitivan broj";
         }
-        setHasErrors(Object.keys(errors).length > 0);
+
         return errors;
     };
-
     return (
         <div className="sektor-details-container">
             <div>

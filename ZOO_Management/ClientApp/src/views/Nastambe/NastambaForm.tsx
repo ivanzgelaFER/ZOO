@@ -8,7 +8,7 @@ import { InputText } from "primereact/inputtext";
 import "./Nastambe.css";
 import { ZooContainer } from "../../containers/ZooContainer/ZooContainer";
 import { INastamba, nastambaInit } from "../../models/nastambe";
-import { createNewNastamba } from "../../api/nastambe";
+import {createNewNastamba, getNastambeTipovi} from "../../api/nastambe";
 import { Checkbox } from "primereact/checkbox";
 import { getSektoriOptions } from "../../api/sektori";
 import { Dropdown } from "primereact/dropdown";
@@ -21,6 +21,21 @@ export const NastambaForm = () => {
     const navigate = useNavigate();
     const [loading, setLoading] = useState(false);
     const [sektoriOptions, setSektoriOptions] = useState<SelectItem[]>([]);
+    const [tipovi, setTipovi] = useState<string[]>([]);
+
+    useEffect(() => {
+        const fetchTipovi = async () => {
+            try {
+                const tipovi = await getNastambeTipovi();
+                setTipovi(tipovi);
+            } catch (error) {
+                console.error("Error fetching types:", error);
+            }
+        };
+
+        fetchTipovi();
+    }, []);
+
 
     const onSubmit = async (data: INastamba) => {
         setLoading(true);
@@ -51,10 +66,15 @@ export const NastambaForm = () => {
         fetchSektoriOptions();
     }, [fetchSektoriOptions]);
 
-    const validate = (data: INastamba) => {
+    const validate = async (data: INastamba) => {
         const errors: any = {};
         if (!data.velicina) errors.velicina = "Veličina mora biti unesena";
         if (data.kapacitet === undefined || data.kapacitet <= 0) errors.kapacitet = "Kapacitet mora biti pozitivan broj";
+        if (data.tip) {
+            if (tipovi.includes(data.tip)){
+                errors.tip = "Navedeni tip postoji!";
+            }
+        }
         return errors;
     };
 
@@ -155,15 +175,26 @@ export const NastambaForm = () => {
                                 />
                                 <Field
                                     name="tip"
-                                    render={({ input }) => (
+                                    render={({ input, meta }) => (
                                         <div className="field">
                                             <span className="p-float-label">
                                                 <InputText
                                                     id="tip"
                                                     {...input}
+                                                    className={classNames({
+                                                        "p-invalid": isFormFieldValid(meta),
+                                                    })}
                                                 />
-                                                <label htmlFor="tip">Tip nastambe</label>
+                                                <label
+                                                    htmlFor="tip"
+                                                    className={classNames({
+                                                        "p-error": isFormFieldValid(meta),
+                                                    })}
+                                                >
+                                                    Tip
+                                                </label>
                                             </span>
+                                            {getFormErrorMessage(meta)}
                                         </div>
                                     )}
                                 />

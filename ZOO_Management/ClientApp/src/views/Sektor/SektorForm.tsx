@@ -1,7 +1,7 @@
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { showToastMessage } from "../../actions/toastMessageActions";
-import { useState } from "react";
+import {useEffect, useState} from "react";
 import { Field, FieldMetaState, Form } from "react-final-form";
 import { Button } from "primereact/button";
 import { InputText } from "primereact/inputtext";
@@ -9,13 +9,28 @@ import "./Sektor.css";
 import { ZooContainer } from "../../containers/ZooContainer/ZooContainer";
 import { InputNumber } from "primereact/inputnumber";
 import { ISektor, sektorInit } from "../../models/sektor";
-import { createNewSektor } from "../../api/sektori";
+import {createNewSektor, getSektorNazivi} from "../../api/sektori";
 import { classNames } from "primereact/utils";
 
 export const SektorForm = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const [loading, setLoading] = useState(false);
+    const [naziviSektora, setNaziviSektora] = useState<string[]>([]);
+
+    useEffect(() => {
+        const fetchSektorNazivi = async () => {
+            try {
+                const nazivi = await getSektorNazivi();
+                setNaziviSektora(nazivi);
+            } catch (error) {
+                console.error("Error fetching sector names:", error);
+            }
+        };
+
+        fetchSektorNazivi();
+    }, []);
+
 
     const onSubmit = async (data: ISektor) => {
         setLoading(true);
@@ -30,7 +45,7 @@ export const SektorForm = () => {
         }
     };
 
-    const validate = (data: ISektor) => {
+    const validate = async (data: ISektor) => {
         const errors: any = {};
         const nazivRegex = /^(?=.*[a-zA-Z])(?=.*\d).+$/;
 
@@ -38,6 +53,10 @@ export const SektorForm = () => {
             errors.naziv = "Naziv mora biti unesen";
         } else if (!nazivRegex.test(data.naziv)) {
             errors.naziv = "Naziv mora sadržavati i slova i brojeve";
+        } else if (data.naziv){
+            if (naziviSektora.includes(data.naziv)) {
+                errors.naziv = "Naziv već postoji";
+            }
         }
 
         if (data.povrsina === undefined || data.povrsina <= 0) {

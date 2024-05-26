@@ -1,7 +1,7 @@
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { showToastMessage } from "../../actions/toastMessageActions";
-import { useState } from "react";
+import {useEffect, useState} from "react";
 import { Field, FieldMetaState, Form } from "react-final-form";
 import { Button } from "primereact/button";
 import { InputText } from "primereact/inputtext";
@@ -15,6 +15,21 @@ export const VrstaZivotinjeForm = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const [loading, setLoading] = useState(false);
+    const [boje, setBoje] = useState<string[]>([]);
+
+    useEffect(() => {
+        const fetchBoje = async () => {
+            try {
+                const nazivi = await getBojeVrstiZivotinja();
+                setBoje(nazivi);
+            } catch (error) {
+                console.error("Error fetching colors:", error);
+            }
+        };
+
+        fetchBoje();
+    }, []);
+
 
     const onSubmit = async (data: IVrstaZivotinje) => {
         setLoading(true);
@@ -49,7 +64,6 @@ export const VrstaZivotinjeForm = () => {
         if (!data.boja) {
             errors.boja = "Boja mora biti unesena";
         } else if (data.boja) {
-            const boje = await getBojeVrstiZivotinja();
             if (boje.includes(data.boja)) {
                 errors.boja = "Već postoji vrsta zivotinje s tom bojom";
             }
