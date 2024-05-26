@@ -79,8 +79,8 @@ export const VrstaZivotinjeDetails = () => {
 
         if (data.visina === undefined || data.visina <= 0) {
             errors.visina = "Visina mora biti pozitivan broj";
-        } else if(data.visina > 10) {
-            errors.visina = "Visina ne može biti veća od 10 metara";
+        } else if(data.visina > 1000) {
+            errors.visina = "Visina ne može biti veća od 1000 cm";
         }
 
         if (data.zivotniVijek === undefined || data.zivotniVijek <= 0 ) {

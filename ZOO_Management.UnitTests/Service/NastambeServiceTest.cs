@@ -7,7 +7,7 @@ using ZOO_Management.DomainModel.RequestModels.Nastambe;
 using ZOO_Management.DomainModel.ResponseModels.Nastambe;
 using ZOO_Management.DomainServices.Interfaces.Repositories;
 
-namespace ZOO_Management.UnitTests
+namespace ZOO_Management.UnitTests.Service
 {
     public class NastambeServiceTest
     {
