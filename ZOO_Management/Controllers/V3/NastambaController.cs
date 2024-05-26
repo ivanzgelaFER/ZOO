@@ -51,5 +51,11 @@ namespace ZOO_Management.Controllers.V3
         {
             return Ok(await _nastambeService.GetNastambeOptions());
         }
+        
+        [HttpGet("tipovi")]
+        public async Task<IActionResult> GetTipovi()
+        {
+            return Ok(await _nastambeService.GetTipovi());
+        }
     }
 }

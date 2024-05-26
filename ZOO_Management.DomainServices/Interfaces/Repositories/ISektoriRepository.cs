@@ -9,5 +9,6 @@ namespace ZOO_Management.DomainServices.Interfaces.Repositories
         Task<int> CreateSektorAsync(Sektor sektor);
         Task<int> UpdateSektorAsync(Sektor sektor);
         Task<int> DeleteSektorAsync(int id);
+        Task<List<string>> GetNaziviSektora();
     }
 }

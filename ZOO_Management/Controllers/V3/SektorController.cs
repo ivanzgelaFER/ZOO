@@ -52,5 +52,11 @@ namespace ZOO_Management.Controllers.V3
         {
             return Ok(await _sektorService.DeleteSektorAsync(id));
         }
+        
+        [HttpGet("nazivi")]
+        public async Task<IActionResult> GetNaziviSektora()
+        {
+            return Ok(await _sektorService.GetNaziviSektora());
+        }
     }
 }

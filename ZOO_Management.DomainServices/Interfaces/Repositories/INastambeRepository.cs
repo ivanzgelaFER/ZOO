@@ -9,5 +9,6 @@ namespace ZOO_Management.DomainServices.Interfaces.Repositories
         Task<int> CreateNastambaAsync(Nastamba nastamba);
         Task<int> UpdateNastambaAsync(Nastamba nastamba);
         Task<int> DeleteNastambaAsync(int id);
+        Task<List<string>> GetTipovi();
     }
 }

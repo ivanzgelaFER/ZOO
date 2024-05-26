@@ -41,6 +41,8 @@ namespace ZOO_Management.ApplicationServices.Services.Sektori
         /// </summary>
         /// <returns></returns>
         Task<int> DeleteSektorAsync(int id);
+        
+        Task<List<string>> GetNaziviSektora();
 
     }
 }

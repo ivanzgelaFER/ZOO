@@ -37,5 +37,7 @@ namespace ZOO_Management.ApplicationServices.Services.Nastambe
         Task<int> DeleteNastambaAsync(int id);
         
         Task<List<DropdownItemsListResponse>> GetNastambeOptions();
+        
+        Task<List<string>> GetTipovi();
     }
 }

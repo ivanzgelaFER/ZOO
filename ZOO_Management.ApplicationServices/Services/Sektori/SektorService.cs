@@ -54,5 +54,10 @@ namespace ZOO_Management.ApplicationServices.Services.Sektori
         {
             return await _sektoriRepository.DeleteSektorAsync(id);
         }
+
+        public async Task<List<string>> GetNaziviSektora()
+        {
+            return await _sektoriRepository.GetNaziviSektora();
+        }
     }
 }

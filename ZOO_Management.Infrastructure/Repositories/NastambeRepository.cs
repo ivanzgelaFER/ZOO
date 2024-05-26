@@ -47,5 +47,10 @@ namespace ZOO_Management.Infrastructure.Repositories
             return id;
         }
 
+        public async Task<List<string>> GetTipovi()
+        {
+            return await _ctx.Nastamba.Select(n => n.Tip).Distinct().ToListAsync();
+        }
+        
     }
 }

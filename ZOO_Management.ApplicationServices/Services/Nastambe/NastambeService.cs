@@ -28,8 +28,10 @@ namespace ZOO_Management.ApplicationServices.Services.Nastambe
                 var nastambaZivotinje = await _zivotinjeRepository.GetByNastambaIdAsync(nast.IdNastamba);
                 nast.Zivotinje = ZivotinjeMapper.MapZivotinjeToZivotinjeGetByNastambaIdResponse(nastambaZivotinje);
             }
+
             return response;
         }
+
         public async Task<NastambeGetResponse> GetNastambaByIdAsync(int id)
         {
             Nastamba nastamba = await _nastambeRepository.GetNastambaByIdAsync(id);
@@ -62,6 +64,12 @@ namespace ZOO_Management.ApplicationServices.Services.Nastambe
             List<Nastamba> nastambe = await _nastambeRepository.GetNastambeAsync();
             List<DropdownItemsListResponse> response = NastambeMapper.MapNastambeToDropdownItemsListResponse(nastambe);
             return response;
+        }
+
+        public async Task<List<string>> GetTipovi()
+        {
+            List<string> nastambe = await _nastambeRepository.GetTipovi();
+            return nastambe;
         }
     }
 }

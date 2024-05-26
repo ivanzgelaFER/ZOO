@@ -48,5 +48,10 @@ namespace ZOO_Management.Infrastructure.Repositories
 
             return id;
         }
+
+        public async Task<List<string>> GetNaziviSektora()
+        {
+            return await _ctx.Sektor.Select(s => s.Naziv).ToListAsync();
+        }
     }
 }
