@@ -10,9 +10,7 @@ import { DataTable } from "primereact/datatable";
 import { useNavigate } from "react-router-dom";
 import { SelectItem } from "primereact/selectitem";
 import { getSektoriOptions } from "../../api/sektori";
-import { IZivotinja } from "../../models/zivotinja";
-import { getAllZivotinje } from "../../api/zivotinje";
-import {InputText} from "primereact/inputtext";
+import { InputText } from "primereact/inputtext";
 
 const cols = [
     { field: "idNastamba", header: "Identifikator", sortable: true },
@@ -28,9 +26,7 @@ export const Nastambe = () => {
     const [sektoriOptions, setSektoriOptions] = useState<SelectItem[]>([]);
     const [filterValue, setFilterValue] = useState("");
 
-    const filteredNastambe = nastambe.filter(nastamba =>
-        nastamba.tip?.toLowerCase().includes(filterValue.toLowerCase())
-    );
+    const filteredNastambe = nastambe.filter(nastamba => nastamba.tip?.toLowerCase().includes(filterValue.toLowerCase()));
 
     const fetchNastambe = useCallback(async () => {
         try {

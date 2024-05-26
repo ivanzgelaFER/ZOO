@@ -17,7 +17,7 @@ import { InputNumber } from "primereact/inputnumber";
 import { Dropdown } from "primereact/dropdown";
 import { getSektoriOptions } from "../../api/sektori";
 import { SelectItem } from "primereact/selectitem";
-import {deleteNastamba, getNastambaById, getNastambeTipovi, updateNastamba} from "../../api/nastambe";
+import { deleteNastamba, getNastambaById, getNastambeTipovi, updateNastamba } from "../../api/nastambe";
 import { Dialog } from "primereact/dialog";
 import { IZivotinja } from "../../models/zivotinja";
 import { deleteZivotinja, updateZivotinja } from "../../api/zivotinje";
@@ -60,7 +60,6 @@ export const NastambaDetails = () => {
 
         fetchTipovi();
     }, []);
-
 
     let resetForm = () => {};
 
@@ -174,7 +173,7 @@ export const NastambaDetails = () => {
         if (!data.velicina) errors.velicina = "Veličina mora biti unesena";
         if (data.kapacitet === undefined || data.kapacitet <= 0) errors.kapacitet = "Kapacitet mora biti pozitivan broj";
         if (data.tip) {
-            if (tipovi.includes(data.tip)){
+            if (tipovi.includes(data.tip)) {
                 errors.tip = "Navedeni tip postoji!";
             }
         }
@@ -378,7 +377,7 @@ export const NastambaDetails = () => {
                     <Column
                         key={"idVrsta"}
                         field={"idVrsta"}
-                        header={"Vrsta zivotinje"}
+                        header={"Boja životinje"}
                         body={(rowData: IZivotinja) => {
                             return vrsteZivotinjaOptions.find(x => x.value === rowData.idVrsta)?.label || "";
                         }}
