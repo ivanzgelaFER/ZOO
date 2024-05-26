@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { showToastMessage } from "../../actions/toastMessageActions";
 import {IVrstaZivotinje} from "../../models/vrstaZivotinje";
 import {deleteVrstaZivotinje, getAllVrsteZivotinja} from "../../api/vrsteZivotinja";
+import {InputText} from "primereact/inputtext";
 
 const cols = [
     { field: "idVrsta", header: "Identifikator", sortable: true },
@@ -19,6 +20,11 @@ export const VrstaZivotinje = () => {
     const [vrsteZivotinja, setVrsteZivotinja] = useState<IVrstaZivotinje[]>([]);
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const [filterValue, setFilterValue] = useState("");
+
+    const filteredVrste = vrsteZivotinja.filter(vrsta =>
+        vrsta.boja?.toLowerCase().includes(filterValue.toLowerCase())
+    );
 
     const fetchVrsteZivotinja = useCallback(async () => {
         try {
@@ -67,10 +73,17 @@ export const VrstaZivotinje = () => {
                         onClick={() => navigate("/vrstazivotinje-add")}
                     />
                 </div>
+                <div className="search-bar">
+                    <InputText
+                        value={filterValue}
+                        onChange={(e) => setFilterValue(e.target.value)}
+                        placeholder="Pretraži po boji"
+                    />
+                </div>
                 <DataTable
                     resizableColumns
                     showGridlines
-                    value={vrsteZivotinja}
+                    value={filteredVrste}
                     emptyMessage={"Trenutno nema zapisa."}
                     onRowClick={rowData => {
                         navigate("/vrstazivotinje-details", {

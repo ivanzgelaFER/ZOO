@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 import { ISektor } from "../../models/sektor";
 import { showToastMessage } from "../../actions/toastMessageActions";
 import { deleteSektor, getAllSektori } from "../../api/sektori";
+import {InputText} from "primereact/inputtext";
 
 const cols = [
     { field: "idSektor", header: "Identifikator", sortable: true },
@@ -19,6 +20,11 @@ export const Sektor = () => {
     const [sektori, setSektori] = useState<ISektor[]>([]);
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const [filterValue, setFilterValue] = useState("");
+
+    const filteredSektori = sektori.filter(sektor =>
+        sektor.naziv?.toLowerCase().includes(filterValue.toLowerCase())
+    );
 
     const fetchSektori = useCallback(async () => {
         try {
@@ -67,10 +73,17 @@ export const Sektor = () => {
                         onClick={() => navigate("/sektor-add")}
                     />
                 </div>
+                <div className="search-bar">
+                    <InputText
+                        value={filterValue}
+                        onChange={(e) => setFilterValue(e.target.value)}
+                        placeholder="Pretraži po nazivu"
+                    />
+                </div>
                 <DataTable
                     resizableColumns
                     showGridlines
-                    value={sektori}
+                    value={filteredSektori}
                     emptyMessage={"Trenutno nema zapisa."}
                     onRowClick={rowData => {
                         navigate("/sektor-details", {

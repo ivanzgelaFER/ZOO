@@ -11,6 +11,7 @@ import {IZivotinja} from "../../models/zivotinja";
 import {deleteZivotinja, getAllZivotinje} from "../../api/zivotinje";
 import {getVrsteZivotinjaOptions} from "../../api/vrsteZivotinja";
 import {getNastambeOptions} from "../../api/nastambe";
+import {InputText} from "primereact/inputtext";
 
 const cols = [
     {field: "idZivotinja", header: "Identifikator", sortable: true},
@@ -21,10 +22,15 @@ const cols = [
 
 export const Zivotinje = () => {
     const [zivotinje, setZivotinje] = useState<IZivotinja[]>([]);
+    const [filterValue, setFilterValue] = useState("");
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const [vrsteZivotinjaOptions, setVrsteZivotinjaOptions] = useState<SelectItem[]>([]);
     const [nastambeOptions, setNastambeOptions] = useState<SelectItem[]>([]);
+
+    const filteredZivotinje = zivotinje.filter(zivotinja =>
+        zivotinja.ime.toLowerCase().includes(filterValue.toLowerCase())
+    );
 
     const fetchZivotinje = useCallback(async () => {
         try {
@@ -99,10 +105,17 @@ export const Zivotinje = () => {
                         onClick={() => navigate("/zivotinja-add")}
                     />
                 </div>
+                <div className="search-bar">
+                    <InputText
+                        value={filterValue}
+                        onChange={(e) => setFilterValue(e.target.value)}
+                        placeholder="Pretraži po imenu"
+                    />
+                </div>
                 <DataTable
                     resizableColumns
                     showGridlines
-                    value={zivotinje}
+                    value={filteredZivotinje}
                     emptyMessage={"Trenutno nema zapisa."}
                     onRowClick={rowData => {
                         navigate("/zivotinja-details", {

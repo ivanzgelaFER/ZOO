@@ -12,6 +12,7 @@ import { SelectItem } from "primereact/selectitem";
 import { getSektoriOptions } from "../../api/sektori";
 import { IZivotinja } from "../../models/zivotinja";
 import { getAllZivotinje } from "../../api/zivotinje";
+import {InputText} from "primereact/inputtext";
 
 const cols = [
     { field: "idNastamba", header: "Identifikator", sortable: true },
@@ -25,6 +26,11 @@ export const Nastambe = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const [sektoriOptions, setSektoriOptions] = useState<SelectItem[]>([]);
+    const [filterValue, setFilterValue] = useState("");
+
+    const filteredNastambe = nastambe.filter(nastamba =>
+        nastamba.tip?.toLowerCase().includes(filterValue.toLowerCase())
+    );
 
     const fetchNastambe = useCallback(async () => {
         try {
@@ -86,10 +92,18 @@ export const Nastambe = () => {
                         onClick={() => navigate("/nastamba-add")}
                     />
                 </div>
+                <div className="search-bar">
+                    <InputText
+                        type="text"
+                        placeholder="Pretraži po tipu nastambe"
+                        value={filterValue}
+                        onChange={e => setFilterValue(e.target.value)}
+                    />
+                </div>
                 <DataTable
                     resizableColumns
                     showGridlines
-                    value={nastambe}
+                    value={filteredNastambe}
                     emptyMessage={"Trenutno nema zapisa."}
                     onRowClick={rowData => {
                         navigate("/nastamba-details", {
