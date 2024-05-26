@@ -70,15 +70,11 @@ export const VrstaZivotinjeDetails = () => {
         }
     };
 
-    const validate = async (data: IVrstaZivotinje) => {
+    const validate = (data: IVrstaZivotinje) => {
         const errors: any = {};
 
         if (!data.boja) {
             errors.boja = "Boja mora biti unesena";
-        } else if (data.boja) {
-            if (boje.includes(data.boja)) {
-                errors.boja = "Već postoji vrsta zivotinje s tom bojom";
-            }
         }
 
         if (data.visina === undefined || data.visina <= 0) {
