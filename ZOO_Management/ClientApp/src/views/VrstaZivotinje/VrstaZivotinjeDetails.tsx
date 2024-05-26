@@ -50,22 +50,23 @@ export const VrstaZivotinjeDetails = () => {
         }
     };
 
-    /*const validate = (data: ISektor) => {
+    const validate = (data: IVrstaZivotinje) => {
         const errors: any = {};
-        const nazivRegex = /^(?=.*[a-zA-Z])(?=.*\d).+$/;
 
-        if (!data.naziv) {
-            errors.naziv = "Naziv mora biti unesen";
-        } else if (!nazivRegex.test(data.naziv)) {
-            errors.naziv = "Naziv mora sadržavati i slova i brojeve";
+        if (!data.boja) {
+            errors.boja = "Boja mora biti unesena";
         }
 
-        if (data.povrsina === undefined || data.povrsina <= 0) {
-            errors.povrsina = "Površina mora biti pozitivan broj";
+        if (data.visina === undefined || data.visina <= 0) {
+            errors.visina = "Visina mora biti pozitivan broj";
+        }
+
+        if (data.zivotniVijek === undefined || data.zivotniVijek <= 0) {
+            errors.zivotniVijek = "Zivotni vijek mora biti pozitivan broj";
         }
         setHasErrors(Object.keys(errors).length > 0);
         return errors;
-    };*/
+    }
 
     return (
         <div className="vrstazivotinje-details-container">
@@ -117,7 +118,7 @@ export const VrstaZivotinjeDetails = () => {
                 <Form
                     onSubmit={onSubmit}
                     initialValues={vrstazivotinje}
-                    /*validate={validate}*/
+                    validate={validate}
                 >
                     {({ handleSubmit, form }) => {
                         resetForm = form.reset;

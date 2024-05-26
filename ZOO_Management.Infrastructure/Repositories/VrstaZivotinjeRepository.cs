@@ -44,4 +44,10 @@ public class VrstaZivotinjeRepository : IVrstaZivotinjeRepository
         await _ctx.SaveChangesAsync();
         return id;
     }
+    
+    public async Task<int?> GetZivotniVijekVrsteZivotinje(int id)
+    {
+        VrstaZivotinje vrstaZivotinje = await _ctx.VrstaZivotinje.FindAsync(id);
+        return vrstaZivotinje.ZivotniVijek;
+    }
 }

@@ -12,7 +12,9 @@ import { Dropdown } from "primereact/dropdown";
 import { SelectItem } from "primereact/selectitem";
 import { IZivotinja } from "../../models/zivotinja";
 import {deleteZivotinja, getZivotinjaById, updateZivotinja} from "../../api/zivotinje";
-import {getVrsteZivotinjaOptions} from "../../api/vrsteZivotinja";
+import {getVrsteZivotinjaOptions, getZivotniVijekjeByVrstaId} from "../../api/vrsteZivotinja";
+import {getNastambeOptions} from "../../api/nastambe";
+import {InputText} from "primereact/inputtext";
 
 interface ILocationState {
     zivotinja: IZivotinja;
@@ -36,6 +38,8 @@ export const ZivotinjaDetails = () => {
     const [dialogOpen, setDialogOpen] = useState(false);
     const dispatch = useDispatch();
     const [zivotinjaForEdit, setZivotinjaForEdit] = useState<IZivotinja>();
+    const [hasErrors, setHasErrors] = useState(false);
+    const [nasambeOptions, setNastambeOptions] = useState<SelectItem[]>([]);
 
     let resetForm = () => {};
 
@@ -81,7 +85,7 @@ export const ZivotinjaDetails = () => {
         } catch (err) {
             dispatch(showToastMessage("Pogreška tijekom brisanja zivotinje.", "error"));
         } finally {
-            navigate("/zivotinje");
+            navigate("/zivotinja");
         }
     };
 
@@ -106,14 +110,73 @@ export const ZivotinjaDetails = () => {
         }
     }, [dispatch]);
 
+    const fetchNastambeOptions = useCallback(async () => {
+        try {
+            const nastambeOptions = await getNastambeOptions();
+            setNastambeOptions(nastambeOptions);
+        } catch (error) {
+            dispatch(showToastMessage("Pogreška prilikom dohvaćanja nastambi", "error"));
+        }
+    }, [dispatch]);
+
     useEffect(() => {
         fetchVrsteZivotinjaOptions();
     }, [fetchVrsteZivotinjaOptions]);
+
+    useEffect(() => {
+        fetchNastambeOptions();
+    }, [fetchNastambeOptions]);
 
     const vrsteZivotinjaOptionDisplay = (id: number) => {
         if (id === -1) return "Trenutno nema dodijeljenu vrstu zivotinje";
         return vrsteZivotinjaOptions.find(vrsteZivotinja => vrsteZivotinja.value === id)?.label ?? "Nepoznata vrsta zivotinje";
     };
+
+    const nastambeOptionDisplay = (id: number) => {
+        if (id === -1) return "Trenutno nema dodijeljenu nastambu";
+        return nasambeOptions.find(nastambe => nastambe.value === id)?.label ?? "Nepoznata nastamba";
+    }
+
+    const validate = async (values: IZivotinja) => {
+        const errors: any = {};
+
+        if (!values.ime || values.ime.trim() === "") {
+            errors.ime = "Ime mora biti uneseno.";
+        } else if (values.ime.length > 20) {
+            errors.ime = "Ime mora imati manje od 20 znakova.";
+        }
+
+        if (values.starost === undefined || values.starost === null || values.starost < 0) {
+            errors.starost = "Starost mora biti pozitivan broj.";
+        }
+
+        if (values.kilaza === undefined || values.kilaza === null || values.kilaza < 0) {
+            errors.kilaza = "Kilaza mora biti pozitivan broj.";
+        } else if (values.kilaza > 500) {
+            errors.kilaza = "Kilaza mora biti manja od 500 kg.";
+        }
+
+        if (!values.idVrsta || values.idVrsta < 0) {
+            errors.idVrsta = "Vrsta zivotinje mora biti odabrana";
+        } else if (values.idVrsta) {
+            try {
+                const zivotniVijek = await getZivotniVijekjeByVrstaId(values.idVrsta);
+                console.log(zivotniVijek)
+                if (values.starost !== undefined && values.starost > zivotniVijek) {
+                    errors.starost = `Starost mora biti manja od maksimalne starosti za vrstu: ${zivotniVijek} godina.`;
+                }
+            } catch (error) {
+                console.log(error);
+                errors.starost = "Došlo je do greške pri dohvaćanju maksimalne starosti za vrstu.";
+            }
+        }
+
+        if (!values.idNastamba || values.idNastamba < 0) {
+            errors.idNastamba = "Nastamba mora biti odabrana";
+        }
+        return errors;
+    }
+
 
     return (
         <div className="zivotinja-details-container">
@@ -163,6 +226,7 @@ export const ZivotinjaDetails = () => {
                 <Form
                     onSubmit={onSubmit}
                     initialValues={zivotinja}
+                    validate={validate}
                 >
                     {({ handleSubmit, form }) => {
                         resetForm = form.reset;
@@ -183,14 +247,11 @@ export const ZivotinjaDetails = () => {
                                                 editMode={editMode}
                                                 name="ime"
                                                 fieldRender={(input, hasErrors) => (
-                                                    <InputNumber
+                                                    <InputText
                                                         className={classNames({
                                                             "p-invalid": hasErrors,
                                                         })}
                                                         {...input}
-                                                        onChange={(value: any) => {
-                                                            input.onChange(value.value);
-                                                        }}
                                                     />
                                                 )}
                                                 displayRender={<span>{zivotinja?.ime}</span>}
@@ -264,24 +325,23 @@ export const ZivotinjaDetails = () => {
 
                                     <tr>
                                         <th>
-                                            <strong>ID Nastambe</strong>
+                                            <strong>Nastamba</strong>
                                         </th>
                                         <td>
                                             <FieldOrDisplay
                                                 editMode={editMode}
                                                 name="idNastamba"
                                                 fieldRender={(input, hasErrors) => (
-                                                    <InputNumber
+                                                    <Dropdown
+                                                        id={"idNastamba"}
                                                         className={classNames({
                                                             "p-invalid": hasErrors,
                                                         })}
                                                         {...input}
-                                                        onChange={(value: any) => {
-                                                            input.onChange(value.value);
-                                                        }}
+                                                         options={nasambeOptions}
                                                     />
                                                 )}
-                                                displayRender={<span>{zivotinja?.idNastamba}</span>}
+                                                displayRender={nastambeOptionDisplay(zivotinja?.idNastamba ?? -1)}
                                             />
                                         </td>
                                     </tr>

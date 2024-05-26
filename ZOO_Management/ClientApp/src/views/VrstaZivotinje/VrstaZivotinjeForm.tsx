@@ -43,6 +43,24 @@ export const VrstaZivotinjeForm = () => {
         );
     };
 
+    const validate = (data: IVrstaZivotinje) => {
+        const errors: any = {};
+
+        if (!data.boja) {
+            errors.boja = "Boja mora biti unesena";
+        }
+
+        if (data.visina === undefined || data.visina <= 0) {
+            errors.visina = "Visina mora biti pozitivan broj";
+        }
+
+        if (data.zivotniVijek === undefined || data.zivotniVijek <= 0) {
+            errors.zivotniVijek = "Zivotni vijek mora biti pozitivan broj";
+        }
+
+        return errors;
+    }
+
     return (
         <>
             <div>
@@ -61,7 +79,7 @@ export const VrstaZivotinjeForm = () => {
                     <Form
                         onSubmit={onSubmit}
                         initialValues={vrstaZivotinjeInit}
-                        /*validate={validate}*/
+                        validate={validate}
                         render={({ handleSubmit }) => (
                             <form
                                 onSubmit={handleSubmit}

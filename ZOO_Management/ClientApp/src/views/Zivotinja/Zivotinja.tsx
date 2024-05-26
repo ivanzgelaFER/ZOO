@@ -10,6 +10,7 @@ import {Column} from "primereact/column";
 import {IZivotinja} from "../../models/zivotinja";
 import {deleteZivotinja, getAllZivotinje} from "../../api/zivotinje";
 import {getVrsteZivotinjaOptions} from "../../api/vrsteZivotinja";
+import {getNastambeOptions} from "../../api/nastambe";
 
 const cols = [
     {field: "idZivotinja", header: "Identifikator", sortable: true},
@@ -23,6 +24,7 @@ export const Zivotinje = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const [vrsteZivotinjaOptions, setVrsteZivotinjaOptions] = useState<SelectItem[]>([]);
+    const [nastambeOptions, setNastambeOptions] = useState<SelectItem[]>([]);
 
     const fetchZivotinje = useCallback(async () => {
         try {
@@ -68,9 +70,22 @@ export const Zivotinje = () => {
         }
     }, [dispatch]);
 
+    const fetchNastambeOptions = useCallback(async () => {
+        try {
+            const nastambeOptions = await getNastambeOptions();
+            setNastambeOptions(nastambeOptions);
+        } catch (error) {
+            dispatch(showToastMessage("Pogreška prilikom dohvaćanja nastambi", "error"));
+        }
+    }, [dispatch]);
+
     useEffect(() => {
         fetchVrsteZivotinjaOptions();
     }, [fetchVrsteZivotinjaOptions]);
+
+    useEffect(() => {
+        fetchNastambeOptions();
+    }, [fetchNastambeOptions]);
 
     return (
         <div className="zivotinje-container">
@@ -110,12 +125,18 @@ export const Zivotinje = () => {
                     <Column
                         key={"idVrstaZivotinje"}
                         field={"idVrstaZivotinje"}
-                        header={"VrstaZivotinje"}
+                        header={"Vrsta"}
                         body={rowdata => vrsteZivotinjaOptions.find(x => x.value === rowdata.idVrsta)?.label || ("" as any)}
                     />
                     <Column
-                        key={"Obriši"}
+                        key={"idNastamba"}
                         field={"idNastamba"}
+                        header={"Nastamba"}
+                        body={rowdata => nastambeOptions.find(x => x.value === rowdata.idNastamba)?.label || ("" as any)}
+                    />
+                    <Column
+                        key={"Obriši"}
+                        field={"idZivotinja"}
                         header={"Obriši"}
                         body={actionColumnDelete}
                     />

@@ -52,5 +52,10 @@ namespace ZOO_Management.ApplicationServices.Services.VrstaZivotinje
         {
             return await _vrstaZivotinjeRepository.DeleteVrstaZivotinjaAsync(id);
         }
+        
+        public async Task<int?> GetZivotniVijekVrsteZivotinje(int id)
+        {
+            return await _vrstaZivotinjeRepository.GetZivotniVijekVrsteZivotinje(id);
+        }
     }
 }

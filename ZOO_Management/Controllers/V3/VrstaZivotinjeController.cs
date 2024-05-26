@@ -51,5 +51,11 @@ namespace ZOO_Management.Controllers.V3
         {
             return Ok(await _vrstaZivotinjeService.DeleteVrstaZivotinjeAsync(id));
         }
+        
+        [HttpGet("zivotnivijek/{id}")]
+        public async Task<int?> GetZivotniVijekVrsteZivotinje([FromRoute] int id)
+        {
+            return await _vrstaZivotinjeService.GetZivotniVijekVrsteZivotinje(id);
+        }
     }
 }

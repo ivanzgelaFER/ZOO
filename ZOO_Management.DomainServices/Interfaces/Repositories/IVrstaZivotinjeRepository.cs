@@ -9,4 +9,5 @@ public interface IVrstaZivotinjeRepository
     Task<int> CreateVrstaZivotinjaAsync(VrstaZivotinje novaVrstaZivotinja);
     Task<int> UpdateVrstaZivotinjaAsync(VrstaZivotinje vrstaZivotinja);
     Task<int> DeleteVrstaZivotinjaAsync(int id);
+    Task<int?> GetZivotniVijekVrsteZivotinje(int id);
 }
