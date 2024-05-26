@@ -10,7 +10,12 @@ import { Button } from "primereact/button";
 import { InputNumber } from "primereact/inputnumber";
 import { InputText } from "primereact/inputtext";
 import {IVrstaZivotinje} from "../../models/vrstaZivotinje";
-import {deleteVrstaZivotinje, getVrstaZivotinjeById, updateVrstaZivotinje} from "../../api/vrsteZivotinja";
+import {
+    deleteVrstaZivotinje,
+    getBojeVrstiZivotinja,
+    getVrstaZivotinjeById,
+    updateVrstaZivotinje
+} from "../../api/vrsteZivotinja";
 
 interface ILocationState {
     vrsta: IVrstaZivotinje;
@@ -50,19 +55,28 @@ export const VrstaZivotinjeDetails = () => {
         }
     };
 
-    const validate = (data: IVrstaZivotinje) => {
+    const validate = async (data: IVrstaZivotinje) => {
         const errors: any = {};
 
         if (!data.boja) {
             errors.boja = "Boja mora biti unesena";
+        } else if (data.boja) {
+            const boje = await getBojeVrstiZivotinja();
+            if (boje.includes(data.boja)) {
+                errors.boja = "Već postoji vrsta zivotinje s tom bojom";
+            }
         }
 
         if (data.visina === undefined || data.visina <= 0) {
             errors.visina = "Visina mora biti pozitivan broj";
+        } else if(data.visina > 10) {
+            errors.visina = "Visina ne može biti veća od 10 metara";
         }
 
-        if (data.zivotniVijek === undefined || data.zivotniVijek <= 0) {
+        if (data.zivotniVijek === undefined || data.zivotniVijek <= 0 ) {
             errors.zivotniVijek = "Zivotni vijek mora biti pozitivan broj";
+        } else if(data.zivotniVijek > 150) {
+            errors.zivotniVijek = "Zivotni vijek ne može biti veći od 150 godina";
         }
         setHasErrors(Object.keys(errors).length > 0);
         return errors;

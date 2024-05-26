@@ -35,3 +35,8 @@ export const getZivotniVijekjeByVrstaId = async (idVrsta: number) => {
     const res = await axios.get(`/vrstaZivotinje/zivotnivijek/${idVrsta}`);
     return res.data;
 }
+
+export const getBojeVrstiZivotinja = async () => {
+    const res = await axios.get(`/vrstaZivotinje/boje`);
+    return res.data;
+}

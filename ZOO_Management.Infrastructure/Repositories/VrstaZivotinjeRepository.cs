@@ -50,4 +50,9 @@ public class VrstaZivotinjeRepository : IVrstaZivotinjeRepository
         VrstaZivotinje vrstaZivotinje = await _ctx.VrstaZivotinje.FindAsync(id);
         return vrstaZivotinje.ZivotniVijek;
     }
+    
+    public async Task<List<string>> GetBojeVrstaZivotinja()
+    {
+        return await _ctx.VrstaZivotinje.Select(vz => vz.Boja).Distinct().ToListAsync();
+    }
 }

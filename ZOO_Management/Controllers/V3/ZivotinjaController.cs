@@ -49,5 +49,6 @@ namespace ZOO_Management.Controllers.V3
         {
             return Ok(await _zivotinjeService.DeleteZivotinjaAsync(id));
         }   
+        
     }
 }

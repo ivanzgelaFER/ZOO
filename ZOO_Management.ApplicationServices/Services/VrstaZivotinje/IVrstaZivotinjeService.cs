@@ -13,5 +13,6 @@ namespace ZOO_Management.ApplicationServices.Services.VrstaZivotinje
         Task<int> UpdateVrstaZivotinjeAsync(VrstaZivotinjeUpdateRequest request);
         Task<int> DeleteVrstaZivotinjeAsync(int id);
         Task<int?> GetZivotniVijekVrsteZivotinje(int id);
+        Task<List<string>> GetBojeVrstaZivotinja();
     }
 }

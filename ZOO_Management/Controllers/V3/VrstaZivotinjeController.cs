@@ -57,5 +57,11 @@ namespace ZOO_Management.Controllers.V3
         {
             return await _vrstaZivotinjeService.GetZivotniVijekVrsteZivotinje(id);
         }
+
+        [HttpGet("boje")]
+        public async Task<List<string>> GetAllBoje()
+        {
+            return await _vrstaZivotinjeService.GetBojeVrstaZivotinja();
+        }
     }
 }

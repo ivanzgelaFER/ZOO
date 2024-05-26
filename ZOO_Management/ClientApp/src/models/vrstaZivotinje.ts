@@ -1,6 +1,6 @@
 export interface IVrstaZivotinje{
     idVrsta: number;
-    boja: string;
+    boja?: string;
     visina?: number;
     zivotniVijek?: number;
 }

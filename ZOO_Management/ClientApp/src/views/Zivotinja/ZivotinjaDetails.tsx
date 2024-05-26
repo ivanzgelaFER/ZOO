@@ -174,6 +174,7 @@ export const ZivotinjaDetails = () => {
         if (!values.idNastamba || values.idNastamba < 0) {
             errors.idNastamba = "Nastamba mora biti odabrana";
         }
+
         return errors;
     }
 

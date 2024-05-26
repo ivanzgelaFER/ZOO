@@ -9,7 +9,7 @@ import { ZooContainer } from "../../containers/ZooContainer/ZooContainer";
 import { InputNumber } from "primereact/inputnumber";
 import { classNames } from "primereact/utils";
 import {IVrstaZivotinje, vrstaZivotinjeInit} from "../../models/vrstaZivotinje";
-import {createNewVrstaZivotinje} from "../../api/vrsteZivotinja";
+import {createNewVrstaZivotinje, getBojeVrstiZivotinja} from "../../api/vrsteZivotinja";
 
 export const VrstaZivotinjeForm = () => {
     const dispatch = useDispatch();
@@ -43,21 +43,29 @@ export const VrstaZivotinjeForm = () => {
         );
     };
 
-    const validate = (data: IVrstaZivotinje) => {
+    const validate = async (data: IVrstaZivotinje) => {
         const errors: any = {};
 
         if (!data.boja) {
             errors.boja = "Boja mora biti unesena";
+        } else if (data.boja) {
+            const boje = await getBojeVrstiZivotinja();
+            if (boje.includes(data.boja)) {
+                errors.boja = "Već postoji vrsta zivotinje s tom bojom";
+            }
         }
 
         if (data.visina === undefined || data.visina <= 0) {
             errors.visina = "Visina mora biti pozitivan broj";
+        } else if(data.visina > 10) {
+            errors.visina = "Visina ne može biti veća od 10 metara";
         }
 
-        if (data.zivotniVijek === undefined || data.zivotniVijek <= 0) {
+        if (data.zivotniVijek === undefined || data.zivotniVijek <= 0 ) {
             errors.zivotniVijek = "Zivotni vijek mora biti pozitivan broj";
+        } else if(data.zivotniVijek > 150) {
+            errors.zivotniVijek = "Zivotni vijek ne može biti veći od 150 godina";
         }
-
         return errors;
     }
 
